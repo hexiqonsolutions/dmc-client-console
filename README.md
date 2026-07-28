@@ -4,12 +4,11 @@ AI-powered operating system for DM Creatives Studio — modular, secure, and bui
 
 ## Current status
 
-**Milestone 3 — App shell** is complete.
+**Milestone 4 — Clients & Projects** is complete.
 
-- Next.js App Router + TypeScript + Tailwind + shadcn/ui
-- Studio Command design system + DMC brand assets
-- Supabase email/password auth + organizations
-- Protected dashboard with active nav, mobile menu, shared empty/loading states
+- Full CRUD for clients and projects (org-scoped + RLS)
+- Auth, app shell, and Studio Command design system
+- SQL migrations through `00002_clients_projects.sql`
 
 ## Quick start
 

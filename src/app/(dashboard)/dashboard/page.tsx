@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { listClients, listProjects } from "@/lib/data/crm";
 import { getWorkspaceContext } from "@/lib/workspace";
 
 export const metadata: Metadata = {
@@ -22,15 +23,32 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const workspace = await getWorkspaceContext();
 
+  let clientCount = 0;
+  let projectCount = 0;
+  let crmReady = true;
+
+  if (workspace?.organization) {
+    try {
+      const [clients, projects] = await Promise.all([
+        listClients(workspace.organization.id),
+        listProjects(workspace.organization.id),
+      ]);
+      clientCount = clients.length;
+      projectCount = projects.length;
+    } catch {
+      crmReady = false;
+    }
+  }
+
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
       <PageHeader
-        badge={<Badge variant="secondary">Milestone 3</Badge>}
+        badge={<Badge variant="secondary">Milestone 4</Badge>}
         title={`Welcome${workspace?.profile?.full_name ? `, ${workspace.profile.full_name}` : ""}`}
-        description="Your app shell is ready — active navigation, branded logo, and shared empty/loading patterns for every module."
+        description="Clients and projects are live — add records, edit them, and keep delivery scoped to your organization."
         actions={
-          <Button asChild variant="outline" className="cursor-pointer">
-            <Link href="/dashboard/clients">Browse clients</Link>
+          <Button asChild className="cursor-pointer">
+            <Link href="/dashboard/clients">Manage clients</Link>
           </Button>
         }
       />
@@ -73,20 +91,27 @@ export default async function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>Signed-in identity</CardDescription>
+            <CardTitle>CRM snapshot</CardTitle>
+            <CardDescription>Counts for this workspace</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <p>
-              <span className="text-muted-foreground">Email: </span>
-              {workspace?.email ?? "—"}
-            </p>
-            <p>
-              <span className="text-muted-foreground">User ID: </span>
-              <span className="break-all font-mono text-xs">
-                {workspace?.userId}
-              </span>
-            </p>
+          <CardContent className="space-y-3 text-sm">
+            {crmReady ? (
+              <>
+                <p>
+                  <span className="text-muted-foreground">Clients: </span>
+                  {clientCount}
+                </p>
+                <p>
+                  <span className="text-muted-foreground">Projects: </span>
+                  {projectCount}
+                </p>
+              </>
+            ) : (
+              <p className="text-muted-foreground">
+                Run `00002_clients_projects.sql` in Supabase to enable CRM
+                tables.
+              </p>
+            )}
           </CardContent>
         </Card>
       </section>
@@ -94,15 +119,25 @@ export default async function DashboardPage() {
       <section className="grid gap-4 md:grid-cols-2">
         <EmptyState
           icon={Users}
-          title="No clients yet"
-          description="Client CRM arrives in Milestone 4. The empty state pattern is ready now."
+          title={clientCount === 0 ? "No clients yet" : `${clientCount} clients`}
+          description={
+            clientCount === 0
+              ? "Add your first client to unlock projects."
+              : "Open the clients module to add, edit, or search."
+          }
           actionLabel="Open clients"
           actionHref="/dashboard/clients"
         />
         <EmptyState
           icon={FolderKanban}
-          title="No projects yet"
-          description="Projects will connect to clients in Milestone 4."
+          title={
+            projectCount === 0 ? "No projects yet" : `${projectCount} projects`
+          }
+          description={
+            projectCount === 0
+              ? "Create a project once you have at least one client."
+              : "Track status and due dates in the projects module."
+          }
           actionLabel="Open projects"
           actionHref="/dashboard/projects"
         />

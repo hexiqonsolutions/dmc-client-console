@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 import { createClient } from "@/lib/supabase/server";
 import type { Organization, Profile } from "@/types/database";
 
@@ -50,5 +52,22 @@ export async function getWorkspaceContext(): Promise<WorkspaceContext | null> {
     profile: profile ?? null,
     organization,
     role: membership?.role ?? null,
+  };
+}
+
+export async function requireWorkspace() {
+  const workspace = await getWorkspaceContext();
+
+  if (!workspace) {
+    redirect("/login");
+  }
+
+  if (!workspace.organization) {
+    redirect("/setup");
+  }
+
+  return {
+    ...workspace,
+    organization: workspace.organization,
   };
 }

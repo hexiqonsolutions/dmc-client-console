@@ -2,6 +2,15 @@
 
 All notable changes to DM OS are documented here.
 
+## [0.4.0] — 2026-07-28
+
+### Added
+
+- Milestone 4 CRM: clients and projects CRUD with Zod validation
+- SQL migration `00002_clients_projects.sql` with org-scoped RLS
+- Searchable tables, create/edit dialogs, delete confirmation, toasts
+- Dashboard CRM snapshot counts
+
 ## [0.3.0] — 2026-07-28
 
 ### Added
@@ -10,6 +19,10 @@ All notable changes to DM OS are documented here.
 - Brand logo + favicon wiring (`BrandLogo`, `src/app/icon.png`)
 - Shared `PageHeader`, `EmptyState`, `PageLoading`, `ErrorState` patterns
 - Placeholder Clients, Projects, and Settings routes with empty states
+
+### Fixed
+
+- Pinned `lucide-react@0.525.0` for Next.js Turbopack compatibility
 
 ## [0.2.0] — 2026-07-28
 

@@ -64,6 +64,38 @@ auth.users 1──* organization_members *──1 organizations
 - Members: users can select memberships for orgs they belong to  
 - Helper: `is_org_member(org_id)` (security definer)
 
-## Planned next tables (Milestone 4+)
+## Planned next tables (Milestone 5+)
 
-`clients`, `projects` — always scoped by `organization_id` with RLS.
+AI conversation / activity tables may come later. Clients and projects are live in Milestone 4.
+
+## Milestone 4 tables
+
+### `clients`
+
+| Column | Type | Notes |
+|--------|------|--------|
+| id | uuid PK | |
+| organization_id | uuid FK | Tenant scope |
+| name | text | Required |
+| email / phone / company / notes | text | Optional |
+| status | client_status | `active` \| `inactive` \| `prospect` |
+| created_by | uuid | Auth user |
+| created_at / updated_at | timestamptz | Auto |
+
+### `projects`
+
+| Column | Type | Notes |
+|--------|------|--------|
+| id | uuid PK | |
+| organization_id | uuid FK | Kept in sync with client org via trigger |
+| client_id | uuid FK | Cascade delete with client |
+| name | text | Required |
+| description | text | Optional |
+| status | project_status | planned/active/on_hold/completed/cancelled |
+| due_date | date | Optional |
+| created_by | uuid | Auth user |
+| created_at / updated_at | timestamptz | Auto |
+
+Migration: `supabase/migrations/00002_clients_projects.sql`
+
+RLS: members can select/insert/update/delete rows for organizations they belong to.

@@ -2,34 +2,40 @@
 
 ## Status
 
-Milestone 2 uses **Server Actions** and one **Route Handler** (no public REST API yet).
+Milestone 4 uses **Server Actions** (no public REST API yet).
 
-## Server Actions
+## Auth actions
 
-### `loginAction(input)`
-
-- **File:** `src/app/actions/auth.ts`
-- **Input:** `{ email, password }` (Zod `loginSchema`)
-- **Result:** `{ success: true }` or `{ success: false, error }`
-
-### `signupAction(input)`
+### `loginAction` / `signupAction` / `signOutAction`
 
 - **File:** `src/app/actions/auth.ts`
-- **Input:** `{ fullName, organizationName, email, password }` (Zod `signupSchema`)
-- **Side effect:** Auth user + DB trigger creates profile/org/membership
-- **Result:** success, optional “check your email” message, or error
+- Zod-validated email/password flows
 
-### `signOutAction()`
+## CRM actions
 
-- Clears Supabase session and redirects to `/login`
+### Clients — `src/app/actions/clients.ts`
+
+| Action | Input | Notes |
+|--------|-------|--------|
+| `createClientAction` | `ClientInput` | Inserts into caller's organization |
+| `updateClientAction` | `id`, `ClientInput` | Org-scoped update |
+| `deleteClientAction` | `id` | Cascades related projects in DB |
+
+### Projects — `src/app/actions/projects.ts`
+
+| Action | Input | Notes |
+|--------|-------|--------|
+| `createProjectAction` | `ProjectInput` | Verifies client belongs to org |
+| `updateProjectAction` | `id`, `ProjectInput` | Org-scoped update |
+| `deleteProjectAction` | `id` | Org-scoped delete |
+
+Schemas: `src/lib/validations/crm.ts`
+
+All mutations call `requireWorkspace()`, rely on Supabase RLS, and `revalidatePath` dashboard routes.
 
 ## Route Handlers
 
 ### `GET /auth/callback`
 
-- Exchanges `?code=` for a session (email confirmation / OAuth-style PKCE)
+- Exchanges `?code=` for a session
 - Redirects to `/dashboard` (or `?next=`)
-
-## Planned later
-
-REST or Server Actions for clients/projects with Zod validation + org membership checks.

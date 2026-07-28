@@ -87,8 +87,9 @@ export default function SetupPage() {
               Providers → Email (optional but easier).
             </li>
             <li>
-              Run the SQL in `supabase/migrations/00001_init_auth_orgs.sql` in
-              the SQL Editor.
+              Run SQL migrations in order in the SQL Editor:
+              `supabase/migrations/00001_init_auth_orgs.sql` then
+              `supabase/migrations/00002_clients_projects.sql`.
             </li>
             <li>Restart the Next.js dev server.</li>
           </ol>

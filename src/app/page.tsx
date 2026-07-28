@@ -22,7 +22,8 @@ const foundationChecks = [
   { label: "Supabase auth + organizations", done: true },
   { label: "Protected /dashboard routes", done: true },
   { label: "App shell polish + brand assets", done: true },
-  { label: "Clients + Projects CRUD (Milestone 4)", done: false },
+  { label: "Clients + Projects CRUD", done: true },
+  { label: "AI Copilot (Milestone 5)", done: false },
 ];
 
 const tokens = [
@@ -46,7 +47,7 @@ export default function HomePage() {
             subtitle="DM Creatives Operating System"
           />
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">Milestone 3</Badge>
+            <Badge variant="secondary">Milestone 4</Badge>
             <Button asChild variant="outline" size="sm" className="cursor-pointer">
               <Link href="/login">Sign in</Link>
             </Button>
