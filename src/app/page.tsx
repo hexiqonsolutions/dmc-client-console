@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { CheckCircle2, Circle } from "lucide-react";
+
+import { TokenSwatch } from "@/components/foundation/token-swatch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,16 +12,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TokenSwatch } from "@/components/foundation/token-swatch";
-import { CheckCircle2, Circle } from "lucide-react";
+import { isSupabaseConfigured } from "@/lib/env";
 
 const foundationChecks = [
   { label: "Next.js App Router + TypeScript", done: true },
-  { label: "Tailwind CSS v4", done: true },
-  { label: "shadcn/ui base components", done: true },
+  { label: "Tailwind CSS v4 + shadcn/ui", done: true },
   { label: "Studio Command design tokens", done: true },
-  { label: "Project documentation", done: true },
-  { label: "Auth & Supabase (Milestone 2)", done: false },
+  { label: "Supabase auth + organizations", done: true },
+  { label: "Protected /dashboard routes", done: true },
+  { label: "App shell polish (Milestone 3)", done: false },
 ];
 
 const tokens = [
@@ -30,10 +33,12 @@ const tokens = [
 ];
 
 export default function HomePage() {
+  const configured = isSupabaseConfigured();
+
   return (
     <div className="flex flex-1 flex-col">
       <header className="border-b border-border/80 bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex size-9 items-center justify-center rounded-md bg-sidebar text-sm font-semibold tracking-tight text-sidebar-primary-foreground">
               <span className="text-sidebar-primary">DM</span>
@@ -47,29 +52,41 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <Badge variant="secondary">Milestone 1</Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary">Milestone 2</Badge>
+            <Button asChild variant="outline" size="sm" className="cursor-pointer">
+              <Link href="/login">Sign in</Link>
+            </Button>
+            <Button asChild size="sm" className="cursor-pointer">
+              <Link href={configured ? "/signup" : "/setup"}>
+                {configured ? "Get started" : "Setup"}
+              </Link>
+            </Button>
+          </div>
         </div>
       </header>
 
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-6 py-12">
         <section className="space-y-4">
           <Badge variant="outline" className="border-primary/30 text-primary">
-            Foundation ready
+            Auth & tenancy ready
           </Badge>
           <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Your agency operating system starts here.
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Milestone 1 locks the production stack and Studio Command design
-            system. Auth, database, and modules come next — one milestone at a
-            time.
+            Milestone 2 adds secure sign-in, automatic workspace creation, and a
+            protected dashboard. Connect Supabase once, then create your first
+            account.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
-            <Button className="cursor-pointer" type="button">
-              Foundation complete
+            <Button asChild className="cursor-pointer">
+              <Link href={configured ? "/signup" : "/setup"}>
+                {configured ? "Create workspace" : "Connect Supabase"}
+              </Link>
             </Button>
-            <Button variant="outline" className="cursor-pointer" asChild>
-              <a href="#tokens">View design tokens</a>
+            <Button asChild variant="outline" className="cursor-pointer">
+              <Link href="/login">Sign in</Link>
             </Button>
           </div>
         </section>
@@ -79,9 +96,9 @@ export default function HomePage() {
         <section className="grid gap-6 md:grid-cols-2">
           <Card className="border-border/80 shadow-sm">
             <CardHeader>
-              <CardTitle>Foundation checklist</CardTitle>
+              <CardTitle>Progress checklist</CardTitle>
               <CardDescription>
-                What Milestone 1 delivers and what comes next.
+                What is done and what comes next.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -131,38 +148,11 @@ export default function HomePage() {
             </CardContent>
           </Card>
         </section>
-
-        <section className="rounded-xl border border-border/80 bg-card/90 p-6 shadow-sm">
-          <h2 className="text-xl font-semibold tracking-tight">
-            Component smoke test
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Verify buttons, badges, and focus styles render with the design
-            system.
-          </p>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <Button className="cursor-pointer">Primary</Button>
-            <Button variant="secondary" className="cursor-pointer">
-              Secondary
-            </Button>
-            <Button variant="outline" className="cursor-pointer">
-              Outline
-            </Button>
-            <Button
-              className="cursor-pointer bg-cta text-cta-foreground hover:bg-cta/90"
-            >
-              CTA
-            </Button>
-            <Badge>Default</Badge>
-            <Badge variant="secondary">Secondary</Badge>
-            <Badge variant="outline">Outline</Badge>
-          </div>
-        </section>
       </main>
 
       <footer className="border-t border-border/80 py-6">
         <p className="mx-auto max-w-5xl px-6 text-sm text-muted-foreground">
-          DM OS · Milestone 1 Foundation · DM Creatives Studio
+          DM OS · Milestone 2 Auth · DM Creatives Studio
         </p>
       </footer>
     </div>

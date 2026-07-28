@@ -2,6 +2,17 @@
 
 All notable changes to DM OS are documented here.
 
+## [0.2.0] — 2026-07-28
+
+### Added
+
+- Milestone 2 auth: Supabase email/password login and signup
+- Organization bootstrap via SQL trigger (profile + workspace + owner)
+- Protected `/dashboard` via `src/proxy.ts` session refresh
+- Auth callback route, setup checklist page, dashboard workspace summary
+- React Hook Form + Zod validation on auth forms
+- SQL migration `supabase/migrations/00001_init_auth_orgs.sql`
+
 ## [0.1.0] — 2026-07-28
 
 ### Added

@@ -2,21 +2,34 @@
 
 ## Status
 
-**No product APIs yet.** Milestone 1 is UI/foundation only.
+Milestone 2 uses **Server Actions** and one **Route Handler** (no public REST API yet).
 
-## Planned approach
+## Server Actions
 
-| Style | When to use |
-|-------|-------------|
-| Server Actions | Form mutations tied to UI (preferred for many CRUD flows) |
-| Route Handlers (`src/app/api/...`) | Webhooks, external integrations, streaming |
-| Supabase client | Direct authenticated reads where RLS is sufficient |
+### `loginAction(input)`
 
-## Conventions (when APIs appear)
+- **File:** `src/app/actions/auth.ts`
+- **Input:** `{ email, password }` (Zod `loginSchema`)
+- **Result:** `{ success: true }` or `{ success: false, error }`
 
-1. Validate input with **Zod** before any database call.
-2. Check **auth session** and **org membership**.
-3. Return typed, predictable error shapes.
-4. Never expose `SUPABASE_SERVICE_ROLE_KEY` to the browser.
+### `signupAction(input)`
 
-This file will list endpoints and payloads as they are built.
+- **File:** `src/app/actions/auth.ts`
+- **Input:** `{ fullName, organizationName, email, password }` (Zod `signupSchema`)
+- **Side effect:** Auth user + DB trigger creates profile/org/membership
+- **Result:** success, optional “check your email” message, or error
+
+### `signOutAction()`
+
+- Clears Supabase session and redirects to `/login`
+
+## Route Handlers
+
+### `GET /auth/callback`
+
+- Exchanges `?code=` for a session (email confirmation / OAuth-style PKCE)
+- Redirects to `/dashboard` (or `?next=`)
+
+## Planned later
+
+REST or Server Actions for clients/projects with Zod validation + org membership checks.

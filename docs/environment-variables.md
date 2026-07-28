@@ -16,8 +16,8 @@ cp .env.example .env.local
 |----------|----------|-----------|-------------|
 | `NEXT_PUBLIC_APP_NAME` | Optional | 1 | Display name (default DM OS) |
 | `NEXT_PUBLIC_APP_URL` | Optional | 1 | Public app URL |
-| `NEXT_PUBLIC_SUPABASE_URL` | Yes (from M2) | 2 | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes (from M2) | 2 | Public anon key (RLS-protected) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | 2 | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | 2 | Public anon key (RLS-protected) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | 2+ | Admin key — never expose to client |
 | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | Optional | 5+ | AI providers |
 

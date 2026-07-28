@@ -2,12 +2,13 @@
 
 ## Near-term milestones
 
-| Milestone | Focus |
-|-----------|--------|
-| 2 | Supabase auth, organizations, protected routes |
-| 3 | App shell (sidebar, topbar, empty/loading patterns) |
-| 4 | Clients + Projects CRUD (full stack) |
-| 5 | AI Copilot rail (feature-flagged) |
+| Milestone | Focus | Status |
+|-----------|--------|--------|
+| 1 | Foundation stack + design tokens | Done |
+| 2 | Supabase auth, organizations, protected routes | Done |
+| 3 | App shell polish (nav states, empty/loading patterns) | Next |
+| 4 | Clients + Projects CRUD (full stack) | Planned |
+| 5 | AI Copilot rail (feature-flagged) | Planned |
 
 ## Product ideas (later)
 

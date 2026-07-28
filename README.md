@@ -4,18 +4,20 @@ AI-powered operating system for DM Creatives Studio — modular, secure, and bui
 
 ## Current status
 
-**Milestone 1 — Foundation** is complete.
+**Milestone 2 — Auth & organizations** is complete.
 
-- Next.js App Router + TypeScript
-- Tailwind CSS v4 + shadcn/ui
+- Next.js App Router + TypeScript + Tailwind + shadcn/ui
 - Studio Command design system
-- Project documentation baseline
+- Supabase email/password auth
+- Auto workspace (organization) on signup
+- Protected `/dashboard`
 
 ## Quick start
 
 ```bash
 npm install
 cp .env.example .env.local
+# Fill Supabase URL + anon key, run SQL migration (see docs/installation.md)
 npm run dev
 ```
 
