@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FolderKanban, Users } from "lucide-react";
 
+import { EmptyState } from "@/components/shared/empty-state";
+import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,17 +23,17 @@ export default async function DashboardPage() {
   const workspace = await getWorkspaceContext();
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
-      <section className="space-y-3">
-        <Badge variant="secondary">Milestone 2</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Welcome{workspace?.profile?.full_name ? `, ${workspace.profile.full_name}` : ""}
-        </h1>
-        <p className="max-w-2xl text-muted-foreground">
-          Auth and your organization workspace are live. Clients and projects
-          arrive in Milestone 4 after the app shell polish in Milestone 3.
-        </p>
-      </section>
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
+      <PageHeader
+        badge={<Badge variant="secondary">Milestone 3</Badge>}
+        title={`Welcome${workspace?.profile?.full_name ? `, ${workspace.profile.full_name}` : ""}`}
+        description="Your app shell is ready — active navigation, branded logo, and shared empty/loading patterns for every module."
+        actions={
+          <Button asChild variant="outline" className="cursor-pointer">
+            <Link href="/dashboard/clients">Browse clients</Link>
+          </Button>
+        }
+      />
 
       <section className="grid gap-4 md:grid-cols-2">
         <Card>
@@ -53,19 +56,17 @@ export default async function DashboardPage() {
                 </p>
                 <p>
                   <span className="text-muted-foreground">Your role: </span>
-                  {workspace.role}
+                  <span className="capitalize">{workspace.role}</span>
                 </p>
               </>
             ) : (
-              <div className="space-y-3">
-                <p className="text-muted-foreground">
-                  No organization found. Confirm the SQL migration ran after
-                  signup.
-                </p>
-                <Button asChild variant="outline" className="cursor-pointer">
-                  <Link href="/setup">Open setup guide</Link>
-                </Button>
-              </div>
+              <EmptyState
+                className="border-0 bg-transparent px-0 py-6"
+                title="No organization yet"
+                description="Confirm the SQL migration ran, then create a new account."
+                actionLabel="Open setup"
+                actionHref="/setup"
+              />
             )}
           </CardContent>
         </Card>
@@ -82,30 +83,30 @@ export default async function DashboardPage() {
             </p>
             <p>
               <span className="text-muted-foreground">User ID: </span>
-              <span className="font-mono text-xs">{workspace?.userId}</span>
+              <span className="break-all font-mono text-xs">
+                {workspace?.userId}
+              </span>
             </p>
           </CardContent>
         </Card>
       </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Empty modules</CardTitle>
-          <CardDescription>
-            Placeholder areas for upcoming milestones
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-lg border border-dashed border-border bg-muted/40 px-6 py-10 text-center">
-            <p className="text-sm font-medium text-foreground">
-              No clients or projects yet
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Milestone 4 adds full CRUD for clients and projects.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <section className="grid gap-4 md:grid-cols-2">
+        <EmptyState
+          icon={Users}
+          title="No clients yet"
+          description="Client CRM arrives in Milestone 4. The empty state pattern is ready now."
+          actionLabel="Open clients"
+          actionHref="/dashboard/clients"
+        />
+        <EmptyState
+          icon={FolderKanban}
+          title="No projects yet"
+          description="Projects will connect to clients in Milestone 4."
+          actionLabel="Open projects"
+          actionHref="/dashboard/projects"
+        />
+      </section>
     </div>
   );
 }

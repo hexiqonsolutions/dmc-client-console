@@ -30,6 +30,11 @@ export const metadata: Metadata = {
   description:
     "DM Creatives Operating System — an AI-powered OS for digital agencies.",
   applicationName: "DM OS",
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: [{ url: "/favicon.png" }],
+    shortcut: ["/favicon.png"],
+  },
 };
 
 export default function RootLayout({

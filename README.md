@@ -4,13 +4,12 @@ AI-powered operating system for DM Creatives Studio — modular, secure, and bui
 
 ## Current status
 
-**Milestone 2 — Auth & organizations** is complete.
+**Milestone 3 — App shell** is complete.
 
 - Next.js App Router + TypeScript + Tailwind + shadcn/ui
-- Studio Command design system
-- Supabase email/password auth
-- Auto workspace (organization) on signup
-- Protected `/dashboard`
+- Studio Command design system + DMC brand assets
+- Supabase email/password auth + organizations
+- Protected dashboard with active nav, mobile menu, shared empty/loading states
 
 ## Quick start
 

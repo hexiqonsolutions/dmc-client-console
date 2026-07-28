@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, Circle } from "lucide-react";
 
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { TokenSwatch } from "@/components/foundation/token-swatch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,8 @@ const foundationChecks = [
   { label: "Studio Command design tokens", done: true },
   { label: "Supabase auth + organizations", done: true },
   { label: "Protected /dashboard routes", done: true },
-  { label: "App shell polish (Milestone 3)", done: false },
+  { label: "App shell polish + brand assets", done: true },
+  { label: "Clients + Projects CRUD (Milestone 4)", done: false },
 ];
 
 const tokens = [
@@ -39,21 +41,12 @@ export default function HomePage() {
     <div className="flex flex-1 flex-col">
       <header className="border-b border-border/80 bg-card/80 backdrop-blur-sm">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-9 items-center justify-center rounded-md bg-sidebar text-sm font-semibold tracking-tight text-sidebar-primary-foreground">
-              <span className="text-sidebar-primary">DM</span>
-            </div>
-            <div>
-              <p className="font-heading text-lg font-semibold tracking-tight text-foreground">
-                DM OS
-              </p>
-              <p className="text-xs text-muted-foreground">
-                DM Creatives Operating System
-              </p>
-            </div>
-          </div>
+          <BrandLogo
+            href="/"
+            subtitle="DM Creatives Operating System"
+          />
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">Milestone 2</Badge>
+            <Badge variant="secondary">Milestone 3</Badge>
             <Button asChild variant="outline" size="sm" className="cursor-pointer">
               <Link href="/login">Sign in</Link>
             </Button>
@@ -69,20 +62,19 @@ export default function HomePage() {
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-6 py-12">
         <section className="space-y-4">
           <Badge variant="outline" className="border-primary/30 text-primary">
-            Auth & tenancy ready
+            App shell ready
           </Badge>
           <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Your agency operating system starts here.
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Milestone 2 adds secure sign-in, automatic workspace creation, and a
-            protected dashboard. Connect Supabase once, then create your first
-            account.
+            Milestone 3 polishes the dashboard shell with your DMC brand,
+            active navigation, mobile menu, and reusable empty/loading patterns.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Button asChild className="cursor-pointer">
-              <Link href={configured ? "/signup" : "/setup"}>
-                {configured ? "Create workspace" : "Connect Supabase"}
+              <Link href={configured ? "/dashboard" : "/setup"}>
+                {configured ? "Open dashboard" : "Connect Supabase"}
               </Link>
             </Button>
             <Button asChild variant="outline" className="cursor-pointer">
@@ -152,7 +144,7 @@ export default function HomePage() {
 
       <footer className="border-t border-border/80 py-6">
         <p className="mx-auto max-w-5xl px-6 text-sm text-muted-foreground">
-          DM OS · Milestone 2 Auth · DM Creatives Studio
+          DM OS · Milestone 3 App Shell · DM Creatives Studio
         </p>
       </footer>
     </div>

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import { SignOutButton } from "@/components/auth/sign-out-button";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+import { DashboardTopbar } from "@/components/layout/dashboard-topbar";
 import { isSupabaseConfigured } from "@/lib/env";
 import { getWorkspaceContext } from "@/lib/workspace";
 
@@ -23,21 +23,18 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-full flex-1">
-      <DashboardSidebar organizationName={workspace.organization?.name} />
+      <div className="hidden md:flex">
+        <DashboardSidebar organizationName={workspace.organization?.name} />
+      </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-border/80 bg-card/80 px-6 py-3 backdrop-blur-sm">
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-foreground">
-              {workspace.profile?.full_name ?? workspace.email}
-            </p>
-            <p className="truncate text-xs text-muted-foreground">
-              {workspace.role ? `${workspace.role} · ` : null}
-              {workspace.organization?.slug ?? "No organization yet"}
-            </p>
-          </div>
-          <SignOutButton />
-        </header>
-        <main className="flex-1 px-6 py-8">{children}</main>
+        <DashboardTopbar
+          fullName={workspace.profile?.full_name}
+          email={workspace.email}
+          role={workspace.role}
+          organizationName={workspace.organization?.name}
+          organizationSlug={workspace.organization?.slug}
+        />
+        <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
     </div>
   );

@@ -19,17 +19,23 @@ dm-os/
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/
-│   │   ├── auth/                # Forms + auth shell
+│   │   ├── auth/
+│   │   ├── brand/               # BrandLogo (dm-logo + favicon)
 │   │   ├── foundation/
-│   │   ├── layout/              # Dashboard sidebar
+│   │   ├── layout/              # Sidebar, topbar, mobile nav
+│   │   ├── shared/              # PageHeader, EmptyState, loading/error
 │   │   └── ui/                  # shadcn primitives
 │   ├── lib/
 │   │   ├── env.ts
+│   │   ├── navigation.ts
 │   │   ├── workspace.ts
 │   │   ├── validations/auth.ts
-│   │   ├── supabase/            # browser, server, middleware clients
+│   │   ├── supabase/
 │   │   └── utils.ts
 │   └── types/database.ts
+├── public/
+│   ├── dm-logo.png
+│   └── favicon.png
 ├── .env.example
 ├── CHANGELOG.md
 └── README.md

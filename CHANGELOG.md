@@ -2,6 +2,15 @@
 
 All notable changes to DM OS are documented here.
 
+## [0.3.0] — 2026-07-28
+
+### Added
+
+- Milestone 3 app shell: active nav, sticky topbar, mobile sheet navigation
+- Brand logo + favicon wiring (`BrandLogo`, `src/app/icon.png`)
+- Shared `PageHeader`, `EmptyState`, `PageLoading`, `ErrorState` patterns
+- Placeholder Clients, Projects, and Settings routes with empty states
+
 ## [0.2.0] — 2026-07-28
 
 ### Added
