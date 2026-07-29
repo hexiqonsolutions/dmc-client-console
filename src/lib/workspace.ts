@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { provisionWorkspaceIfMissing } from "@/lib/workspace-provision";
 import type { Organization, Profile } from "@/types/database";
 
 export type WorkspaceContext = {
@@ -56,14 +57,30 @@ export async function getWorkspaceContext(): Promise<WorkspaceContext | null> {
 }
 
 export async function requireWorkspace() {
-  const workspace = await getWorkspaceContext();
+  let workspace = await getWorkspaceContext();
 
   if (!workspace) {
     redirect("/login");
   }
 
   if (!workspace.organization) {
-    redirect("/setup");
+    const provisioned = await provisionWorkspaceIfMissing({
+      userId: workspace.userId,
+      email: workspace.email,
+      preferredName: workspace.profile?.full_name,
+    });
+
+    if (provisioned.ok) {
+      workspace = await getWorkspaceContext();
+    } else {
+      redirect(
+        `/setup?reason=no-organization&error=${encodeURIComponent(provisioned.error)}`,
+      );
+    }
+  }
+
+  if (!workspace?.organization) {
+    redirect("/setup?reason=no-organization");
   }
 
   return {
