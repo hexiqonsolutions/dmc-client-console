@@ -2,6 +2,15 @@
 
 All notable changes to DM OS are documented here.
 
+## [0.5.0] — 2026-07-29
+
+### Added
+
+- Milestone 5 AI Copilot rail (feature-flagged)
+- Guided mode without OpenAI + live mode with `OPENAI_API_KEY`
+- SQL migration `00003_ai_copilot.sql` for conversations/messages with RLS
+- Dashboard Copilot toggle, empty/loading chat states, clear conversation
+
 ## [0.4.0] — 2026-07-28
 
 ### Added

@@ -88,8 +88,8 @@ export default function SetupPage() {
             </li>
             <li>
               Run SQL migrations in order in the SQL Editor:
-              `supabase/migrations/00001_init_auth_orgs.sql` then
-              `supabase/migrations/00002_clients_projects.sql`.
+              `00001_init_auth_orgs.sql`, `00002_clients_projects.sql`, then
+              `00003_ai_copilot.sql`.
             </li>
             <li>Restart the Next.js dev server.</li>
           </ol>

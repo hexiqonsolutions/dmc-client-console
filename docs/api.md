@@ -2,7 +2,7 @@
 
 ## Status
 
-Milestone 4 uses **Server Actions** (no public REST API yet).
+DM OS uses **Server Actions** (no public REST API yet).
 
 ## Auth actions
 
@@ -31,7 +31,21 @@ Milestone 4 uses **Server Actions** (no public REST API yet).
 
 Schemas: `src/lib/validations/crm.ts`
 
-All mutations call `requireWorkspace()`, rely on Supabase RLS, and `revalidatePath` dashboard routes.
+## AI Copilot actions
+
+### `askCopilotAction` — `src/app/actions/ai.ts`
+
+- Requires `NEXT_PUBLIC_AI_COPILOT_ENABLED=true`
+- Input: `{ conversationId?, message }` (Zod `copilotAskSchema`)
+- Creates/uses an org-scoped conversation, stores user + assistant messages
+- Mode:
+  - `openai` when `OPENAI_API_KEY` is set
+  - `guided` otherwise (local workspace-aware replies)
+- Returns conversation id, reply, mode, and message history
+
+### `clearCopilotConversationAction(conversationId)`
+
+- Deletes the caller's conversation (messages cascade)
 
 ## Route Handlers
 

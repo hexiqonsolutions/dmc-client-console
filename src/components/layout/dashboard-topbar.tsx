@@ -1,6 +1,11 @@
+"use client";
+
+import { Sparkles } from "lucide-react";
+
 import { SignOutButton } from "@/components/auth/sign-out-button";
 import { MobileSidebarTrigger } from "@/components/layout/mobile-sidebar-trigger";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type DashboardTopbarProps = {
   fullName?: string | null;
@@ -8,6 +13,9 @@ type DashboardTopbarProps = {
   role?: string | null;
   organizationName?: string | null;
   organizationSlug?: string | null;
+  aiEnabled?: boolean;
+  copilotOpen?: boolean;
+  onToggleCopilot?: () => void;
 };
 
 export function DashboardTopbar({
@@ -16,6 +24,9 @@ export function DashboardTopbar({
   role,
   organizationName,
   organizationSlug,
+  aiEnabled = false,
+  copilotOpen = false,
+  onToggleCopilot,
 }: DashboardTopbarProps) {
   return (
     <header className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-border/80 bg-card/90 px-4 py-3 backdrop-blur-sm sm:px-6">
@@ -40,7 +51,22 @@ export function DashboardTopbar({
           </p>
         </div>
       </div>
-      <SignOutButton />
+      <div className="flex items-center gap-2">
+        {aiEnabled && onToggleCopilot ? (
+          <Button
+            type="button"
+            variant={copilotOpen ? "secondary" : "outline"}
+            size="sm"
+            className="cursor-pointer"
+            onClick={onToggleCopilot}
+            aria-pressed={copilotOpen}
+          >
+            <Sparkles className="size-4" />
+            <span className="hidden sm:inline">Copilot</span>
+          </Button>
+        ) : null}
+        <SignOutButton />
+      </div>
     </header>
   );
 }

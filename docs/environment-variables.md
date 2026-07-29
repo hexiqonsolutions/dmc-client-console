@@ -19,7 +19,9 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | 2 | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | 2 | Public anon key (RLS-protected) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | 2+ | Admin key — never expose to client |
-| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | Optional | 5+ | AI providers |
+| `NEXT_PUBLIC_AI_COPILOT_ENABLED` | Optional | 5 | `true` to show Copilot rail |
+| `OPENAI_API_KEY` | Optional | 5 | Live OpenAI replies (else guided mode) |
+| `OPENAI_MODEL` | Optional | 5 | Defaults to `gpt-4o-mini` |
 
 ## Naming rules
 

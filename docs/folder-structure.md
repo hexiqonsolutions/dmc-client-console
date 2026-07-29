@@ -20,16 +20,20 @@ dm-os/
 │   │   └── page.tsx
 │   ├── components/
 │   │   ├── auth/
-│   │   ├── brand/               # BrandLogo (dm-logo + favicon)
+│   │   ├── ai/                  # Copilot rail
+│   │   ├── brand/
+│   │   ├── crm/
 │   │   ├── foundation/
-│   │   ├── layout/              # Sidebar, topbar, mobile nav
-│   │   ├── shared/              # PageHeader, EmptyState, loading/error
-│   │   └── ui/                  # shadcn primitives
+│   │   ├── layout/              # Sidebar, topbar, dashboard shell
+│   │   ├── shared/
+│   │   └── ui/
 │   ├── lib/
-│   │   ├── env.ts
+│   │   ├── ai/                  # Copilot prompts + OpenAI helper
+│   │   ├── data/
+│   │   ├── env.ts               # Includes AI feature flag helpers
 │   │   ├── navigation.ts
 │   │   ├── workspace.ts
-│   │   ├── validations/auth.ts
+│   │   ├── validations/
 │   │   ├── supabase/
 │   │   └── utils.ts
 │   └── types/database.ts

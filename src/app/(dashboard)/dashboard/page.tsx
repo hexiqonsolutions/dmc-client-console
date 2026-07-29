@@ -43,9 +43,9 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
       <PageHeader
-        badge={<Badge variant="secondary">Milestone 4</Badge>}
+        badge={<Badge variant="secondary">Milestone 5</Badge>}
         title={`Welcome${workspace?.profile?.full_name ? `, ${workspace.profile.full_name}` : ""}`}
-        description="Clients and projects are live — add records, edit them, and keep delivery scoped to your organization."
+        description="Clients, projects, and AI Copilot are available. Enable the Copilot flag in env to chat about your workspace."
         actions={
           <Button asChild className="cursor-pointer">
             <Link href="/dashboard/clients">Manage clients</Link>

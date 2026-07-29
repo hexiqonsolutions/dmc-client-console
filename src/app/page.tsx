@@ -23,7 +23,7 @@ const foundationChecks = [
   { label: "Protected /dashboard routes", done: true },
   { label: "App shell polish + brand assets", done: true },
   { label: "Clients + Projects CRUD", done: true },
-  { label: "AI Copilot (Milestone 5)", done: false },
+  { label: "AI Copilot rail (feature-flagged)", done: true },
 ];
 
 const tokens = [
@@ -47,7 +47,7 @@ export default function HomePage() {
             subtitle="DM Creatives Operating System"
           />
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">Milestone 4</Badge>
+            <Badge variant="secondary">Milestone 5</Badge>
             <Button asChild variant="outline" size="sm" className="cursor-pointer">
               <Link href="/login">Sign in</Link>
             </Button>
@@ -63,14 +63,15 @@ export default function HomePage() {
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-6 py-12">
         <section className="space-y-4">
           <Badge variant="outline" className="border-primary/30 text-primary">
-            App shell ready
+            AI Copilot ready
           </Badge>
           <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Your agency operating system starts here.
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Milestone 3 polishes the dashboard shell with your DMC brand,
-            active navigation, mobile menu, and reusable empty/loading patterns.
+            Milestone 5 adds a feature-flagged AI Copilot rail. Enable it in
+            `.env.local`, run the AI SQL migration, and ask about clients or
+            projects from the dashboard.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Button asChild className="cursor-pointer">
@@ -145,7 +146,7 @@ export default function HomePage() {
 
       <footer className="border-t border-border/80 py-6">
         <p className="mx-auto max-w-5xl px-6 text-sm text-muted-foreground">
-          DM OS · Milestone 3 App Shell · DM Creatives Studio
+          DM OS · Milestone 5 AI Copilot · DM Creatives Studio
         </p>
       </footer>
     </div>

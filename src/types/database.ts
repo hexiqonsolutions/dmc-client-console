@@ -14,6 +14,7 @@ export type ProjectStatus =
   | "on_hold"
   | "completed"
   | "cancelled";
+export type AiMessageRole = "user" | "assistant" | "system";
 
 export type Database = {
   public: {
@@ -174,6 +175,60 @@ export type Database = {
         };
         Relationships: [];
       };
+      ai_conversations: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string;
+          title: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id: string;
+          title?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string;
+          title?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      ai_messages: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          organization_id: string;
+          role: AiMessageRole;
+          content: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          organization_id: string;
+          role: AiMessageRole;
+          content: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          organization_id?: string;
+          role?: AiMessageRole;
+          content?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -181,6 +236,7 @@ export type Database = {
       org_role: OrgRole;
       client_status: ClientStatus;
       project_status: ProjectStatus;
+      ai_message_role: AiMessageRole;
     };
     CompositeTypes: Record<string, never>;
   };
@@ -192,6 +248,9 @@ export type OrganizationMember =
   Database["public"]["Tables"]["organization_members"]["Row"];
 export type Client = Database["public"]["Tables"]["clients"]["Row"];
 export type Project = Database["public"]["Tables"]["projects"]["Row"];
+export type AiConversation =
+  Database["public"]["Tables"]["ai_conversations"]["Row"];
+export type AiMessage = Database["public"]["Tables"]["ai_messages"]["Row"];
 
 export type ProjectWithClient = Project & {
   clients: Pick<Client, "id" | "name" | "company"> | null;

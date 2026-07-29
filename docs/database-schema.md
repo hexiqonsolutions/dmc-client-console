@@ -64,9 +64,36 @@ auth.users 1──* organization_members *──1 organizations
 - Members: users can select memberships for orgs they belong to  
 - Helper: `is_org_member(org_id)` (security definer)
 
-## Planned next tables (Milestone 5+)
+## Planned next tables
 
-AI conversation / activity tables may come later. Clients and projects are live in Milestone 4.
+Notifications, audit logs, and billing tables may come later.
+
+## Milestone 5 tables
+
+### `ai_conversations`
+
+| Column | Type | Notes |
+|--------|------|--------|
+| id | uuid PK | |
+| organization_id | uuid FK | Tenant scope |
+| user_id | uuid FK | Conversation owner |
+| title | text | From first message |
+| created_at / updated_at | timestamptz | Auto |
+
+### `ai_messages`
+
+| Column | Type | Notes |
+|--------|------|--------|
+| id | uuid PK | |
+| conversation_id | uuid FK | Cascade delete |
+| organization_id | uuid FK | Tenant scope |
+| role | ai_message_role | user / assistant / system |
+| content | text | Required |
+| created_at | timestamptz | Auto |
+
+Migration: `supabase/migrations/00003_ai_copilot.sql`
+
+RLS: users only access their own conversations within orgs they belong to.
 
 ## Milestone 4 tables
 

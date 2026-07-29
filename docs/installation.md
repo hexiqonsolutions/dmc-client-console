@@ -29,7 +29,16 @@ cp .env.example .env.local
 6. **SQL Editor** → run migrations in order:
    - `supabase/migrations/00001_init_auth_orgs.sql`
    - `supabase/migrations/00002_clients_projects.sql`
-7. Restart the app:
+   - `supabase/migrations/00003_ai_copilot.sql`
+7. Enable Copilot in `.env.local`:
+
+```bash
+NEXT_PUBLIC_AI_COPILOT_ENABLED=true
+# Optional for live AI:
+# OPENAI_API_KEY=sk-...
+```
+
+8. Restart the app:
 
 ```bash
 npm run dev
@@ -37,14 +46,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Verify Milestone 4
+## Verify Milestone 5
 
-1. Sign in → `/dashboard/clients`
-2. Add a client → success toast → row appears
-3. Edit and delete with confirmation
-4. `/dashboard/projects` → create a project linked to that client
-5. Search filters both tables
-6. If tables are missing, the error state tells you to run `00002_clients_projects.sql`
+1. Sign in to the dashboard.
+2. Click **Copilot** in the top bar (rail opens).
+3. Ask “How do I add a client?” — guided reply appears without OpenAI.
+4. With `OPENAI_API_KEY` set, replies switch to live mode.
+5. Clear conversation with the trash icon.
+
+If chat fails with a SQL/table error, run `00003_ai_copilot.sql`.
 
 ## Scripts
 
@@ -58,6 +68,6 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Troubleshooting
 
 - **Keys missing** → fill `.env.local` and restart.
-- **Clients/projects error** → run Milestone 4 SQL migration.
+- **Copilot button missing** → set `NEXT_PUBLIC_AI_COPILOT_ENABLED=true` and restart.
+- **Clients/projects/AI errors** → run the matching SQL migration.
 - **Signup works but no org** → re-run `00001` migration; create a fresh user.
-- **Email confirmation loop** → disable confirm email for local, or use `/auth/callback`.

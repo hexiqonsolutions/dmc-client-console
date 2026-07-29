@@ -8,7 +8,7 @@
 | 2 | Supabase auth, organizations, protected routes | Done |
 | 3 | App shell polish (nav states, empty/loading patterns) | Done |
 | 4 | Clients + Projects CRUD (full stack) | Done |
-| 5 | AI Copilot rail (feature-flagged) | Next |
+| 5 | AI Copilot rail (feature-flagged) | Done |
 
 ## Product ideas (later)
 

@@ -4,11 +4,11 @@ AI-powered operating system for DM Creatives Studio — modular, secure, and bui
 
 ## Current status
 
-**Milestone 4 — Clients & Projects** is complete.
+**Milestone 5 — AI Copilot** is complete.
 
-- Full CRUD for clients and projects (org-scoped + RLS)
-- Auth, app shell, and Studio Command design system
-- SQL migrations through `00002_clients_projects.sql`
+- Feature-flagged Copilot rail in the dashboard
+- Guided replies out of the box; OpenAI when configured
+- Full CRM + auth + app shell through earlier milestones
 
 ## Quick start
 
