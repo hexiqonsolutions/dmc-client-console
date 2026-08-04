@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cela Bakehouse Pitch — Before vs After | DMC Creatives Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1F2A1C;
+    --muted: #5C6B56;
+    --bg: #F7F4EF;
+    --line: #E4E0D8;
+    --brand: #4A723D;
+    --brand-soft: #6B8F5E;
+    --blush: #F3D6DE;
+    --bad: #B91C1C;
+    --good: #047857;
+    --display: "Quicksand", system-ui, sans-serif;
+    --font: "Nunito", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 28px 0 10px; }
+  header h1 {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+  }
+  header p { margin: 0; color: var(--muted); max-width: 62ch; }
+  .badge {
+    display: inline-block;
+    background: #E8F0E4; color: var(--brand);
+    padding: 6px 10px; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 800; margin-bottom: 12px;
+  }
+  .actions {
+    display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 8px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 16px; border-radius: 999px;
+    font-weight: 800; text-decoration: none; border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-ghost { background: #fff; border-color: var(--line); color: var(--ink); }
+
+  .compare { display: grid; gap: 16px; margin: 24px 0 36px; }
+  @media (min-width: 900px) { .compare { grid-template-columns: 1fr 1fr; } }
+  .panel {
+    background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  }
+  .panel-head {
+    padding: 12px 16px; font-weight: 800; font-family: var(--display);
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .panel-head.before { background: #FEF2F2; color: var(--bad); }
+  .panel-head.after { background: #ECFDF5; color: var(--good); }
+  .frame { height: 520px; border: 0; width: 100%; background: #fff; }
+  .note {
+    padding: 12px 16px; font-size: 0.88rem; color: var(--muted);
+    border-top: 1px solid var(--line); background: #FBF9F5;
+  }
+
+  .grid { display: grid; gap: 12px; margin-bottom: 40px; }
+  @media (min-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px;
+  }
+  .card h3 {
+    margin: 0 0 8px; font-family: var(--display); font-size: 1.05rem;
+  }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+  .card li { margin-bottom: 6px; }
+
+  .script {
+    background: #243320; color: #E8EDE5; border-radius: 16px; padding: 22px;
+    margin-bottom: 40px;
+  }
+  .script h2 {
+    margin: 0 0 10px; color: #fff; font-family: var(--display); font-size: 1.2rem;
+  }
+  .script p { margin: 0 0 10px; }
+  .script strong { color: #B8D4A8; }
+
+  footer {
+    padding-bottom: 40px; color: var(--muted); font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">Client pitch kit · Cela Bakehouse</div>
+      <h1>From brochure site to orders that land on WhatsApp</h1>
+      <p>
+        Put the live site and this preview side-by-side. Let Anisha feel how a customer orders brownies,
+        plans a custom cake, and confirms everything on WhatsApp — without hunting through Instagram DMs.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./redesign-preview.html" target="_blank">Open ordering preview</a>
+        <a class="btn btn-dark" href="https://celabakehouse.com/" target="_blank" rel="noopener">Open current website</a>
+        <a class="btn btn-ghost" href="#" id="waPitch">Send pitch on WhatsApp</a>
+      </div>
+    </header>
+
+    <section class="compare" aria-label="Before and after">
+      <div class="panel">
+        <div class="panel-head before"><span>BEFORE · Live site</span><span>celabakehouse.com</span></div>
+        <iframe class="frame" title="Current Cela Bakehouse website" src="https://celabakehouse.com/" loading="lazy"></iframe>
+        <div class="note">If the iframe is blocked, use “Open current website” above.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-head after"><span>AFTER · Proposed ordering site</span><span>Prototype</span></div>
+        <iframe class="frame" title="Cela Bakehouse ordering prototype" src="./redesign-preview.html"></iframe>
+        <div class="note">Clickable preview — menu order, custom cake form, WhatsApp handoff, delivery areas, mobile-ready.</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>What’s holding the current site back</h3>
+        <ul>
+          <li>Beautiful story — but no clear “Order now”</li>
+          <li>Every order still starts with a call or Instagram DM</li>
+          <li>No simple form for custom cakes (size, date, theme)</li>
+          <li>Great photos, not yet an orderable menu</li>
+          <li>Delivery areas &amp; lead time are easy to miss</li>
+          <li>On phone, there’s no one-flow path to finish an order</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>What this preview proves</h3>
+        <ul>
+          <li>Her logo, moss green, and real cake photos — still unmistakably Cela</li>
+          <li>Menu orders for bento, brownies, bombolonis &amp; more</li>
+          <li>Custom cake planner: occasion, date, size, inspiration</li>
+          <li>WhatsApp confirmation so Anisha stays in control</li>
+          <li>Delivery clear: Mumbai, Navi Mumbai &amp; Thane</li>
+          <li>Reviews + her baker story — trust stays personal</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>How to present (5 minutes)</h3>
+        <ul>
+          <li>1 min — open the live site: “Where would a guest place an order?”</li>
+          <li>2 min — open the preview, add brownies, send a custom cake enquiry</li>
+          <li>1 min — show the WhatsApp message she’d actually receive</li>
+          <li>1 min — ask: shall we rebuild this under celabakehouse.com?</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>What you can sell next</h3>
+        <ul>
+          <li>Phase 1: Full ordering + enquiry site (this look)</li>
+          <li>Phase 2: Order inbox (WhatsApp + Google Sheet / CRM)</li>
+          <li>Phase 3: Advance UPI / Razorpay for custom cakes</li>
+          <li>Optional: review requests after every delivery</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="script">
+      <h2>Say this to Anisha</h2>
+      <p>
+        “Anisha, Cela already has the hard part — stunning cakes, real reviews, and a brand people remember.
+        Right now the website tells your story, but it doesn’t take the order. I made a live preview where
+        someone can order from your menu or plan a custom cake, then it comes straight to your WhatsApp
+        for you to confirm. If this feels right, we rebuild it under celabakehouse.com.”
+      </p>
+      <p>
+        <strong>Offer:</strong> Free concept (this preview) → paid ordering website → optional payments &amp; inbox.
+      </p>
+      <p>
+        <strong>From:</strong> Vaibhav Gurav · DMC Creatives Studio · www.dmcstudio.in · +91 83693 61785
+      </p>
+    </section>
+
+    <footer>
+      Prepared for pitching Cela Bakehouse (celabakehouse.com) · DMC Creatives Studio<br />
+      Tip: On a laptop, put current site on left half-screen and redesign on right half-screen.
+    </footer>
+  </div>
+
+  <script>
+    const msg = encodeURIComponent(
+`Namaste Anisha,\n\nI went through celabakehouse.com and built a live preview of how Cela can take online orders and custom cake enquiries — using your logo, colours, and photos — with confirmation on WhatsApp.\n\nPlease open this on your phone:\n\nIf you like the direction, we can rebuild the full site under your domain.\n\nVaibhav Gurav\nDMC Creatives Studio\nwww.dmcstudio.in\n+91 83693 61785`
+    );
+    document.getElementById('waPitch').href = `https://wa.me/918369361785?text=${msg}`;
+  </script>
+</body>
+</html>
