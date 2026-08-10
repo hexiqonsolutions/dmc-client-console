@@ -1,0 +1,282 @@
+[
+  {
+    "company": "Caramel Bakery & Patisserie",
+    "owner": "",
+    "phone": "9967244434",
+    "email": "",
+    "website": "https://thecaramelbakery.in/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Bakery",
+    "website_issues": "Generic ThemeWagon template; contact page leaves Call Us/Email Us blank; heavy Swiggy/Zomato dependence; thin product detail beyond catalog cards"
+  },
+  {
+    "company": "Cafe Centrral",
+    "owner": "",
+    "phone": "9082138700",
+    "email": "cafecentral.kharghar@gmail.com",
+    "website": "https://cafecentrral.com/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Cafe / Restaurant",
+    "website_issues": "Uses Gmail for business contact; no WhatsApp click-to-chat CTA; table reserve path is weak vs phone-only; menu not structured for online order"
+  },
+  {
+    "company": "Munchies Cafe",
+    "owner": "",
+    "phone": "8369652893",
+    "email": "munchies.kharghar@gmail.com",
+    "website": "https://munchiescafe.co.in/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Cafe",
+    "website_issues": "Uses Gmail for business contact; no clear online order/booking path on homepage; thin conversion CTAs beyond contact form"
+  },
+  {
+    "company": "Cela Bakehouse",
+    "owner": "Anisha Kaka",
+    "phone": "8169096626",
+    "email": "",
+    "website": "https://celabakehouse.com/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Bakery",
+    "website_issues": "No online order cart; Instagram-led ordering; no WhatsApp CTA on page body; no business email listed; thin menu without prices"
+  },
+  {
+    "company": "Moi Doughssier",
+    "owner": "Nafisa Mukadam",
+    "phone": "9867113900",
+    "email": "nafisa@moidoughssier.com",
+    "website": "https://www.moidoughssier.com/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Bakery / Cafe",
+    "website_issues": "Still pushes Swiggy/Zomato alongside direct order; custom cakes WhatsApp-only; site is strong but reservation/table booking for cafe seating is weak"
+  },
+  {
+    "company": "Harshis",
+    "owner": "Renu Gujari",
+    "phone": "8779385489",
+    "email": "renugujari@gmail.com",
+    "website": "https://harshis.in/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Bakery",
+    "website_issues": "Uses Gmail for business contact; site intermittently errors (500 observed); template leftovers (needhelp@floens.com / fake support number); thin menu and no online order"
+  },
+  {
+    "company": "Hotel Sea Spice",
+    "owner": "",
+    "phone": "9152720209",
+    "email": "hotelseaspice@gmail.com",
+    "website": "https://hotelseaspice.com/",
+    "locality": "Nerul, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Uses Gmail for business contact; outdated/generic design; spammy SEO content (unrelated clinic text); opening hours look broken; no WhatsApp CTA"
+  },
+  {
+    "company": "Dilli 2.0",
+    "owner": "",
+    "phone": "9077728000",
+    "email": "bookings@dilli.in",
+    "website": "https://dilli2o.com/",
+    "locality": "CBD Belapur, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "No clear online order path; booking relies on phone/email; thin conversion hierarchy beyond contact numbers"
+  },
+  {
+    "company": "Sansmaran Banquet & Fine Dine",
+    "owner": "",
+    "phone": "8652381977",
+    "email": "sansmaranfinedine@gmail.com",
+    "website": "https://sansmaran.in/",
+    "locality": "New Panvel, Navi Mumbai",
+    "industry": "Banquet / Restaurant",
+    "website_issues": "Uses Gmail for business contact; banquet enquiry is form-only (no WhatsApp CTA); table reservation widget incomplete for events; OTA-style discovery risk"
+  },
+  {
+    "company": "Hotel Khandesh & Banquet",
+    "owner": "",
+    "phone": "9833406722",
+    "email": "",
+    "website": "https://hotelkhandesh.in/",
+    "locality": "New Panvel (Khanda Colony), Navi Mumbai",
+    "industry": "Hotel / Banquet",
+    "website_issues": "Contact page is thin/image-heavy with weak structured contact details; no email listed; booking path unclear (phone banner only); dated template feel"
+  },
+  {
+    "company": "Pushp Vatika Resort & Lawns",
+    "owner": "",
+    "phone": "7021474940",
+    "email": "reservations@pushpvatikapanvel.com",
+    "website": "https://pushpvatikapanvel.com/",
+    "locality": "Panvel, Navi Mumbai",
+    "industry": "Hotel / Banquet",
+    "website_issues": "Stay booking widget present but banquet/wedding enquiry still phone-heavy; limited WhatsApp prominence on primary CTAs; content blog-heavy vs conversion"
+  },
+  {
+    "company": "Sarovar Annexe",
+    "owner": "",
+    "phone": "8422012171",
+    "email": "sarovarannexe@gmail.com",
+    "website": "https://www.sarovarannexe.com/",
+    "locality": "Kamothe, Navi Mumbai",
+    "industry": "Banquet",
+    "website_issues": "Uses Gmail for business contact; outdated template; animated counters stuck at zero; no online booking (OTA-listing reliant); thin packages/pricing"
+  },
+  {
+    "company": "Hotel Garden Panvel",
+    "owner": "",
+    "phone": "9833810330",
+    "email": "hotelg@rediffmail.com",
+    "website": "https://hotelgardenpanvel.com/",
+    "locality": "Panvel, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "Uses Rediffmail for business contact; outdated copy/grammar; stats counters show 0; no modern online booking engine; weak mobile conversion"
+  },
+  {
+    "company": "Nakhawa Garden Restaurant",
+    "owner": "",
+    "phone": "8591971009",
+    "email": "nakhawa1009@gmail.com",
+    "website": "https://nakhawagardenrestaurant.com/",
+    "locality": "Panvel (Shirdhon), Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Uses Gmail for business contact; thin menu presentation; no online order; contact-led site with limited WhatsApp CTA prominence"
+  },
+  {
+    "company": "Pacific Banquets",
+    "owner": "",
+    "phone": "8080610202",
+    "email": "pacificbanquets@gmail.com",
+    "website": "https://pacificbanquets.co.in/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Banquet",
+    "website_issues": "Uses Gmail for business contact; quote-only enquiry (no online booking calendar); dated static pages; no WhatsApp deep-link CTA on contact copy"
+  },
+  {
+    "company": "Ratnakokan Restaurant",
+    "owner": "Sanjay Chalke",
+    "phone": "7045859333",
+    "email": "mail@ratnakokan.com",
+    "website": "https://ratnakokan.com/",
+    "locality": "Sanpada, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Outdated/broken homepage presentation; no online order cart; multi-branch phones listed but weak conversion CTAs; Swiggy/Zomato reliant for delivery"
+  },
+  {
+    "company": "Ratnakokan Seawoods",
+    "owner": "Sanjay Chalke",
+    "phone": "9833862548",
+    "email": "mail@ratnakokan.com",
+    "website": "https://ratnakokan.com/",
+    "locality": "Seawoods, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Shared thin multi-branch site; no branch-specific menu/order flow; no WhatsApp CTA; delivery discovery via aggregators"
+  },
+  {
+    "company": "Kokan Swad Seawoods",
+    "owner": "Nitin Chalke",
+    "phone": "9324303057",
+    "email": "sales@kokanswad.restaurant",
+    "website": "https://kokanswad.restaurant/branches/seawoods/",
+    "locality": "Seawoods, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Enquiry-form led (no direct online order on branch page); multi-outlet brand site dilutes local conversion; WhatsApp present but secondary to form"
+  },
+  {
+    "company": "Nerul Gymkhana Arena One Banquet & Lawn",
+    "owner": "",
+    "phone": "9323620423",
+    "email": "nerulgymkhana@gmail.com",
+    "website": "https://nerulgymkhana.com/facilities/arenaone/",
+    "locality": "Nerul, Navi Mumbai",
+    "industry": "Banquet",
+    "website_issues": "Uses Gmail for business contact; event booking buried under club/membership content; no dedicated banquet booking flow; phone-only for venue hire"
+  },
+  {
+    "company": "FloDine Cruise / Cafe Relish",
+    "owner": "",
+    "phone": "8369797500",
+    "email": "",
+    "website": "https://flodine.in/home/",
+    "locality": "CBD Belapur, Navi Mumbai",
+    "industry": "Restaurant / Experience Dining",
+    "website_issues": "Outdated WordPress layout; cruise booking is enquiry-led not instant book; no email listed; thin menu for Cafe Relish; weak WhatsApp CTA"
+  },
+  {
+    "company": "Hotel Victory Inn",
+    "owner": "",
+    "phone": "9004020247",
+    "email": "hotelvictoryinn2023@gmail.com",
+    "website": "https://hotelvictoryinn.in/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "Uses Gmail for business contact; generic template; check-availability widget weak; likely OTA-dependent for actual bookings"
+  },
+  {
+    "company": "Hotel Pearl",
+    "owner": "",
+    "phone": "9594745823",
+    "email": "info@hotelpearlindia.com",
+    "website": "https://hotelpearlindia.com/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "Outdated design and copy errors; room booking path unclear; WhatsApp exists but primary site feels OTA-era; thin restaurant (Shalin) web presence"
+  },
+  {
+    "company": "The Royal Palace Hotel",
+    "owner": "",
+    "phone": "9076147777",
+    "email": "theroyalpalacehotelvashi@gmail.com",
+    "website": "https://theroyalpalacehotel.in/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Hotel / Banquet",
+    "website_issues": "Uses Gmail for business contact; reservation form incomplete/broken loading states; banquet page thin; OTA-style discovery risk"
+  },
+  {
+    "company": "JD's Hotel Rajmahal",
+    "owner": "",
+    "phone": "7715943024",
+    "email": "",
+    "website": "https://jdshotel.com/",
+    "locality": "Sanpada / Vashi, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "No email listed; site often slow/timeout; booking path weak vs OTA listings (FabExpress etc.); thin conversion CTAs"
+  },
+  {
+    "company": "Hotel Aarush",
+    "owner": "",
+    "phone": "7710095991",
+    "email": "info@hotelaarush.com",
+    "website": "https://hotelaarush.com/",
+    "locality": "CBD Belapur, Navi Mumbai",
+    "industry": "Hotel / Banquet / Restaurant",
+    "website_issues": "Banquet email uses Gmail (aarushbanquet@gmail.com); mixed hotel/restaurant CTAs; WhatsApp present but banquet packages/pricing thin"
+  },
+  {
+    "company": "Hotel Nimantran",
+    "owner": "",
+    "phone": "9619611211",
+    "email": "",
+    "website": "https://nimantranhotel.com/",
+    "locality": "CBD Belapur, Navi Mumbai",
+    "industry": "Hotel / Banquet / Restaurant",
+    "website_issues": "No WhatsApp click-to-chat CTA; restaurant/banquet phones separate and hard to find; outdated multi-language chrome; weak online booking"
+  },
+  {
+    "company": "Hotel Three Star",
+    "owner": "",
+    "phone": "9320129091",
+    "email": "hotelthreestar@yahoo.co.in",
+    "website": "https://hotelthreestar.com/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Hotel / Restaurant",
+    "website_issues": "Contact page shows support@gmail.com placeholder; Yahoo/outdated email brand; generic luxury template; restaurant (Swaraj) not bookable online"
+  },
+  {
+    "company": "Ramratan Aashiyana Beach Resort",
+    "owner": "",
+    "phone": "9930856111",
+    "email": "",
+    "website": "https://www.ramratanaashiyanaresort.com/",
+    "locality": "Ulwe / Uran side (near Navi Mumbai), Panvel Taluka",
+    "industry": "Hotel / Banquet",
+    "website_issues": "Typos on homepage (Welocme); check-availability incomplete; no email; banquet pricing FAQ-only; Call Now/Chat Now without clear WhatsApp deep link copy"
+  }]
+

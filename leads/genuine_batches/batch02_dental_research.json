@@ -1,0 +1,282 @@
+﻿[
+  {
+    "company": "Dr Belokar Dental Clinic and Implant Center",
+    "owner": "Dr. Belokar",
+    "phone": "9136298251",
+    "email": "dentist@drbelokars.com",
+    "website": "https://drbelokars.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Outdated copyright (2020-24); dense SEO keyword stuffing; generic multi-specialty template look; limited clear booking CTA beyond phone"
+  },
+  {
+    "company": "Smile Matters Multispeciality Dental Clinic",
+    "owner": "Dr. Prasad",
+    "phone": "8850192774",
+    "email": "drprasad@smilemattersgroup.com",
+    "website": "https://smilemattersgroup.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Homepage intermittently returns 500 errors; thin branding differentiation; booking depends mainly on phone/WhatsApp"
+  },
+  {
+    "company": "The Dental Studio",
+    "owner": "Dr. Himmat Jaiswal",
+    "phone": "8989255544",
+    "email": "thedentalstudio07@gmail.com",
+    "website": "https://thedentalstudiokharghar.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Gmail-only contact email; leftover WordPress 'Hello world!' blog post; booking CTA incomplete/broken wording; template WordPress look"
+  },
+  {
+    "company": "Kharghar Dental Hub",
+    "owner": "Dr. Manaswita Yadav",
+    "phone": "9136664929",
+    "email": "",
+    "website": "https://kharghardentalhub.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Contact page intermittently 503; no public email listed; multiple dead/placeholder links (#); generic dental template look"
+  },
+  {
+    "company": "Dr. Pols Children and Family Dental Care",
+    "owner": "Dr. Sanmati Pol",
+    "phone": "8591860677",
+    "email": "drpolsdentalcare@gmail.com",
+    "website": "https://drpolsdentalclinic.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; heavy stock template design; exaggerated/unclear stats presentation; SEO-heavy content"
+  },
+  {
+    "company": "Dentkraft Dental Clinics",
+    "owner": "Dr. Harshil Mehta",
+    "phone": "9004120002",
+    "email": "dr.harshil@gmail.com",
+    "website": "https://dentkraftdentalclinics.com/",
+    "locality": "Kharghar",
+    "industry": "Dental",
+    "website_issues": "Gmail-only primary email; dated multi-page template design; thin modern UX; contact form heavy vs clear CTA hierarchy"
+  },
+  {
+    "company": "Ardent Smiles",
+    "owner": "Dr. Vivek Jaiswar",
+    "phone": "8097592505",
+    "email": "",
+    "website": "https://www.ardentsmiles.in/",
+    "locality": "Nerul",
+    "industry": "Dental",
+    "website_issues": "No public email listed; emoji-heavy hero copy; generic startup-dental template; booking form without clear confirmation UX"
+  },
+  {
+    "company": "Smile Please Super Speciality Dental Clinic",
+    "owner": "Dr. Sharad Kumar",
+    "phone": "9821662442",
+    "email": "shharrad@gmail.com",
+    "website": "https://www.smiileplease.com/",
+    "locality": "Vashi",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; outdated 'since 22 years' copy inconsistency; dated WordPress layout; dual-branch site feels cluttered"
+  },
+  {
+    "company": "Smile Avenue Dental Clinic",
+    "owner": "Dr. Amit Bhirani / Dr. Neha Bhirani",
+    "phone": "9137267173",
+    "email": "",
+    "website": "https://smileavenueclinic.com/",
+    "locality": "Nerul",
+    "industry": "Dental",
+    "website_issues": "Phone not prominent on homepage; no public email; Practo integration dependence; generic award/template claims"
+  },
+  {
+    "company": "Gokhale's Dental Clinic",
+    "owner": "Dr. Sunil Gokhale",
+    "phone": "9321019134",
+    "email": "",
+    "website": "https://www.gokhalesdental.in/",
+    "locality": "Vashi",
+    "industry": "Dental",
+    "website_issues": "No public email on site; Wix-style thin template; limited service depth; basic contact form only"
+  },
+  {
+    "company": "The Elements of Facial Aesthetics (Elements Dental)",
+    "owner": "Dr. Aarti Chowdhari",
+    "phone": "9819816669",
+    "email": "",
+    "website": "https://elementsdentalclinic.com/",
+    "locality": "Vashi",
+    "industry": "Dental",
+    "website_issues": "Phone numbers not rendered as text on contact section; no public email; owner/doctor not clearly named on homepage; booking form thin"
+  },
+  {
+    "company": "Lotus Dental Care Clinic",
+    "owner": "Dr. Sonal Agrawal",
+    "phone": "9987158061",
+    "email": "",
+    "website": "https://lotusdentalcareclinic.com/",
+    "locality": "Vashi",
+    "industry": "Dental",
+    "website_issues": "No public email; thin content pages; generic clinic template; limited trust signals beyond doctor bio"
+  },
+  {
+    "company": "Casa Dentique",
+    "owner": "Dr. Parth Shah",
+    "phone": "9820465370",
+    "email": "",
+    "website": "https://casadentique.com/",
+    "locality": "Seawoods",
+    "industry": "Dental",
+    "website_issues": "Email obscured/not clearly published; broken counter animations showing 0+; mixed dental + hair transplant messaging dilutes focus"
+  },
+  {
+    "company": "Smilekraft Dental Clinic",
+    "owner": "Dr. Vinothini Kannan",
+    "phone": "9869912382",
+    "email": "smilekraftclinic@gmail.com",
+    "website": "https://www.smilekraftclinic.com/",
+    "locality": "Seawoods",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; long-form SEO page density; limited secondary contact channels beyond phone/Gmail"
+  },
+  {
+    "company": "Orosmyle Dental Clinic",
+    "owner": "Dr. Amit Bhandarwar",
+    "phone": "9892850651",
+    "email": "orosmyle@gmail.com",
+    "website": "https://orosmyle.com/",
+    "locality": "Kamothe",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; homepage counters stuck at 0; template dental theme; thin about/team depth on main page"
+  },
+  {
+    "company": "Dhriti Dent 'O' Care and Implant Center",
+    "owner": "Dr. Kanchan Kumari",
+    "phone": "8356049763",
+    "email": "",
+    "website": "https://dhritidentocare.com/",
+    "locality": "Kamothe",
+    "industry": "Dental",
+    "website_issues": "Homepage intermittently 500; grammar/typos in copy; no public email; thin content and basic template look"
+  },
+  {
+    "company": "ALLDENT Dental Clinic",
+    "owner": "Dr. Monika Sonawane",
+    "phone": "7304577281",
+    "email": "alldentulwe@gmail.com",
+    "website": "https://www.alldentcliniculwe.com/",
+    "locality": "Ulwe",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; phone not on homepage (only booking page); thin treatment descriptions; WhatsApp-first contact pattern"
+  },
+  {
+    "company": "Mumbai Dental Care",
+    "owner": "Dr. Vaibhav H. Tiwari",
+    "phone": "7304319909",
+    "email": "",
+    "website": "https://www.mumbaidentalcare.in/",
+    "locality": "Ulwe",
+    "industry": "Dental",
+    "website_issues": "No public email; truncated service blurbs; aggressive 'Fix teeth in 3 Days' marketing claims; generic multi-section template"
+  },
+  {
+    "company": "Sasane Dental Clinic",
+    "owner": "Dr. Rutuparn Sasane",
+    "phone": "9967661337",
+    "email": "sasanedentalclinic@gmail.com",
+    "website": "https://sasanedental.com/",
+    "locality": "Panvel",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; homepage counters show 0+; dual-brand (Tooth Legacy) messaging can confuse; agency-built template feel"
+  },
+  {
+    "company": "The Dental House",
+    "owner": "Dr. Harshvardhan",
+    "phone": "9619944888",
+    "email": "info@dentalhousemumbai.com",
+    "website": "https://dentalhousemumbai.com/",
+    "locality": "Kopar Khairane",
+    "industry": "Dental",
+    "website_issues": "Outdated copyright/footer incomplete; encoding glitches in reviews; thin SEO doorway pages; dated template design"
+  },
+  {
+    "company": "Ekdantam Dental Clinic",
+    "owner": "Dr. Neha Srivastava",
+    "phone": "7984558946",
+    "email": "",
+    "website": "https://www.ekdantamdental.in/",
+    "locality": "Kopar Khairane",
+    "industry": "Dental",
+    "website_issues": "No public email; heavy keyword-stuffed long-form SEO; promo banner dominant; thin unique brand visuals"
+  },
+  {
+    "company": "Splendid Smiles Dental Clinic & Implant Center",
+    "owner": "Dr. Gunjan Rai",
+    "phone": "9137777030",
+    "email": "help@splendidsmilesdentalclinic.com",
+    "website": "https://www.splendidsmilesdentalclinic.com/",
+    "locality": "Kopar Khairane",
+    "industry": "Dental",
+    "website_issues": "Multiple phone numbers across pages (9137777030 / 9930562407) create confusion; generic premium template; limited local content depth"
+  },
+  {
+    "company": "Tooth & You Dental Clinic",
+    "owner": "Dr. Sai Shruthi",
+    "phone": "9136166216",
+    "email": "",
+    "website": "https://www.toothandyoudental.in/",
+    "locality": "Ghansoli",
+    "industry": "Dental",
+    "website_issues": "Owner/doctor not clearly listed in About (only patient reviews); no public email; FAQ content has copy-paste errors; SEO-heavy thin uniqueness"
+  },
+  {
+    "company": "SK Smile Dental Clinic and Implant Center",
+    "owner": "Dr. Satish Kumar Menon",
+    "phone": "8291883844",
+    "email": "sksmiledental@gmail.com",
+    "website": "https://sksmiledental.com/",
+    "locality": "Airoli",
+    "industry": "Dental",
+    "website_issues": "Gmail-only email; thin homepage content; generic WordPress look; dual-location contact not well structured"
+  },
+  {
+    "company": "Smile Care Dental Clinic & Implant Center",
+    "owner": "Dr. Umesh Tambe",
+    "phone": "8652628813",
+    "email": "smilecaredentalclinic@yahoo.com",
+    "website": "https://www.smilecareairoli.com/",
+    "locality": "Airoli",
+    "industry": "Dental",
+    "website_issues": "Yahoo email (dated); homepage lacks prominent phone; basic template layout; limited modern booking UX"
+  },
+  {
+    "company": "Shree Samarth Dental Clinic and Implant Centre",
+    "owner": "Dr. Anuradha Mohite",
+    "phone": "9137814191",
+    "email": "",
+    "website": "https://shreesamarthdental.com/",
+    "locality": "Belapur",
+    "industry": "Dental",
+    "website_issues": "Homepage intermittently 500; no public email found; thin content depth; basic clinic template"
+  },
+  {
+    "company": "Smile Please Super Speciality Dental Clinic (Nerul)",
+    "owner": "Dr. Sharad Kumar",
+    "phone": "9137208535",
+    "email": "shharrad@gmail.com",
+    "website": "https://www.smiileplease.com/nerulbranch/",
+    "locality": "Nerul",
+    "industry": "Dental",
+    "website_issues": "Branch page shares parent site template; Gmail-only email; dated design; booking still phone-centric"
+  },
+  {
+    "company": "Sasane Dental / Tooth Legacy Dental & Implant Center",
+    "owner": "Dr. Rutuparn Sasane",
+    "phone": "9021621337",
+    "email": "sasanedentalclinic@gmail.com",
+    "website": "https://sasanedental.com/contact-us/",
+    "locality": "Panvel",
+    "industry": "Dental",
+    "website_issues": "New Panvel brand nested under Old Panvel site; Gmail-only email; dual-location confusion; agency template"
+  }
+]
