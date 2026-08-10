@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Outreach Console · Navi Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-primary: #2563EB;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #3B82F6;
+    --color-accent: #059669;
+    --color-background: #F8FAFC;
+    --color-foreground: #0F172A;
+    --color-muted: #F1F5FD;
+    --color-border: #E4ECFC;
+    --color-destructive: #DC2626;
+    --color-ring: #2563EB;
+    --wa: #128C7E;
+    --mail: #1D4ED8;
+    --surface: #FFFFFF;
+    --text-muted: #64748B;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --radius: 10px;
+    --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --font: "Fira Sans", system-ui, sans-serif;
+    --mono: "Fira Code", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    line-height: 1.45;
+  }
+  button, a, input, select, textarea { font: inherit; }
+  button, .btn, a.btn { cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+  @media (min-width: 1100px) {
+    .app { grid-template-columns: 1fr 400px; }
+    .drawer { position: sticky; top: 0; height: 100vh; border-left: 1px solid var(--color-border); }
+  }
+
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .brand p {
+    margin: 2px 0 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .link-help {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--color-muted);
+    color: var(--color-foreground);
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+  }
+  .chip svg { width: 14px; height: 14px; }
+
+  .main { padding: var(--space-4) var(--space-5) 96px; }
+  .toolbar {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-bottom: var(--space-4);
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: end;
+  }
+  .field {
+    display: grid;
+    gap: 4px;
+    min-width: 140px;
+  }
+  .field.grow { flex: 1; min-width: 200px; }
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .field input, .field select, .drawer input, .drawer textarea {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 9px 11px;
+    background: #fff;
+    color: var(--color-foreground);
+    min-height: 40px;
+  }
+  .field input:hover, .field select:hover, .drawer input:hover, .drawer textarea:hover {
+    border-color: #c7d7f8;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-muted);
+  }
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-wa { background: var(--wa); color: #fff; }
+  .btn-wa:hover { background: #0f766e; }
+  .btn-mail { background: var(--mail); color: #fff; }
+  .btn-mail:hover { background: #1e40af; }
+  .btn-ghost { background: #fff; border-color: var(--color-border); }
+  .btn-ghost:hover { background: var(--color-muted); }
+  .btn-danger { background: #fff; border-color: #fecaca; color: var(--color-destructive); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-sm { min-height: 36px; padding: 0 10px; font-size: 0.8rem; }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .stats strong {
+    color: var(--color-foreground);
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+    font-size: 0.88rem;
+  }
+  th {
+    background: #0F172A;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr { cursor: pointer; }
+  tr:hover td { background: #F8FAFF; }
+  tr.active td { background: #EFF6FF; }
+  tr.selected td { box-shadow: inset 3px 0 0 var(--color-primary); }
+  .company strong { display: block; font-size: 0.92rem; }
+  .meta { color: var(--text-muted); font-size: 0.78rem; margin-top: 2px; }
+  .pri {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .p1 { background: #FEE2E2; color: #991B1B; }
+  .p2 { background: #FFEDD5; color: #9A3412; }
+  .p3 { background: #E0E7FF; color: #3730A3; }
+  .contact-line { font-family: var(--mono); font-size: 0.78rem; }
+  .muted { color: #94A3B8; }
+  .msg-preview {
+    max-width: 280px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .row-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .row-actions .btn { pointer-events: auto; }
+
+  .drawer {
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .drawer-head {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    align-items: start;
+  }
+  .drawer-head h2 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  .drawer-body {
+    padding: var(--space-4);
+    overflow: auto;
+    display: grid;
+    gap: var(--space-3);
+    flex: 1;
+  }
+  .drawer-body textarea {
+    min-height: 180px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .drawer-foot {
+    padding: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    display: grid;
+    gap: var(--space-2);
+    background: var(--color-muted);
+  }
+  .help-box {
+    padding: var(--space-3);
+    border-radius: 8px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    font-size: 0.82rem;
+    color: #1E3A8A;
+  }
+  .help-box strong { display: block; margin-bottom: 4px; }
+  .empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background: #0F172A;
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 10px;
+    display: none;
+    max-width: 320px;
+    z-index: 40;
+    box-shadow: var(--shadow);
+    font-size: 0.9rem;
+  }
+  .queue {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    background: var(--surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 14px;
+    width: min(380px, calc(100vw - 32px));
+    box-shadow: var(--shadow);
+    display: none;
+    z-index: 40;
+  }
+  .queue strong { font-size: 0.95rem; }
+  .queue-status { margin-top: 6px; color: var(--text-muted); font-size: 0.85rem; }
+  .sticky-mobile {
+    display: none;
+  }
+  @media (max-width: 1099px) {
+    .drawer {
+      position: fixed;
+      inset: auto 0 0 0;
+      max-height: 78vh;
+      border-radius: 16px 16px 0 0;
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -12px 40px rgba(15,23,42,.18);
+      transform: translateY(110%);
+      transition: transform 220ms ease;
+      z-index: 30;
+    }
+    .drawer.open { transform: translateY(0); }
+    .sticky-mobile {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      gap: 8px;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.94);
+      border-top: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
+      z-index: 25;
+    }
+    .sticky-mobile .btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="left">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Outreach Console</h1>
+        <p>Select · edit message · send Email / WhatsApp</p>
+      </div>
+      <div class="link-help">
+        <span class="chip" title="Where email links">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email → mailto
+        </span>
+        <span class="chip" title="Where WhatsApp links">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          WhatsApp → wa.me
+        </span>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="toolbar" aria-label="Filters and bulk actions">
+        <div class="filters">
+          <div class="field grow">
+            <label for="q">Search</label>
+            <input id="q" type="search" placeholder="Company, locality, industry…" />
+          </div>
+          <div class="field">
+            <label for="priority">Priority</label>
+            <select id="priority">
+              <option value="">All</option>
+              <option value="P1">P1 Hot</option>
+              <option value="P2">P2 Redesign</option>
+              <option value="P3">P3 Upsell</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="channel">Channel</label>
+            <select id="channel">
+              <option value="">All</option>
+              <option value="email">Has email</option>
+              <option value="wa">Has WhatsApp</option>
+              <option value="both">Has both</option>
+              <option value="missing">Missing contact</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="selectVisible">Select visible</button>
+          <button type="button" class="btn btn-ghost" id="clearSelect">Clear</button>
+          <button type="button" class="btn btn-mail" id="emailSelected">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email selected
+          </button>
+          <button type="button" class="btn btn-wa" id="waSelected">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+            WhatsApp queue
+          </button>
+          <button type="button" class="btn btn-ghost" id="copyEmails">Copy emails</button>
+          <button type="button" class="btn btn-danger" id="stopQueue">Stop queue</button>
+        </div>
+
+        <div class="stats">
+          <span>Total <strong id="totalCount">0</strong></span>
+          <span>Visible <strong id="visibleCount">0</strong></span>
+          <span>Selected <strong id="selectedCount">0</strong></span>
+          <span>Emails <strong id="selectedEmails">0</strong></span>
+          <span>WhatsApp <strong id="selectedWa">0</strong></span>
+        </div>
+
+        <div class="filters">
+          <div class="field grow">
+            <label for="bulkSubject">Bulk email subject (optional)</label>
+            <input id="bulkSubject" type="text" placeholder="Shared subject for multi-email BCC" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="bulkBody">Bulk email body (optional — WhatsApp always uses each client's personal message)</label>
+          <textarea id="bulkBody" rows="2" placeholder="Short shared intro for BCC emails…"></textarea>
+        </div>
+      </section>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:42px"><input type="checkbox" id="checkAll" aria-label="Select all visible" /></th>
+              <th>Company</th>
+              <th>Priority</th>
+              <th>Contact</th>
+              <th>Message</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <aside class="drawer" id="drawer" aria-label="Edit prospect message and contacts">
+    <div class="drawer-head">
+      <div>
+        <h2 id="drawerTitle">Select a prospect</h2>
+        <p class="meta" id="drawerSub">Click a row to view &amp; edit the outreach message, email, and phone.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="closeDrawer" aria-label="Close editor">Close</button>
+    </div>
+    <div class="drawer-body" id="drawerBody">
+      <div class="empty" id="drawerEmpty">No prospect selected.</div>
+      <form id="editForm" hidden>
+        <div class="help-box">
+          <strong>Where Email &amp; WhatsApp link</strong>
+          Edit <em>Email</em> and <em>Phone (WhatsApp)</em> below. Links rebuild instantly:<br/>
+          • Email uses <code>mailto:you@client.com</code> with subject + message<br/>
+          • WhatsApp uses <code>https://wa.me/91XXXXXXXXXX</code> with the message pre-filled<br/>
+          No API login needed — your default mail app / WhatsApp Web or app opens.
+        </div>
+
+        <div class="field">
+          <label for="editOwner">Owner / contact name</label>
+          <input id="editOwner" type="text" />
+        </div>
+        <div class="field">
+          <label for="editEmail">Email (for SEND EMAIL)</label>
+          <input id="editEmail" type="email" placeholder="name@company.com" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="editPhone">Phone for WhatsApp (10-digit Indian mobile)</label>
+          <input id="editPhone" type="tel" placeholder="9876543210 or +91 98765 43210" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="editSubject">Email subject</label>
+          <input id="editSubject" type="text" />
+        </div>
+        <div class="field">
+          <label for="editMessage">Outreach message (editable)</label>
+          <textarea id="editMessage" rows="10"></textarea>
+        </div>
+        <div class="field">
+          <label>Why this prospect</label>
+          <p class="meta" id="editWrong"></p>
+        </div>
+      </form>
+    </div>
+    <div class="drawer-foot" id="drawerFoot" hidden>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="saveEdit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+          Save changes
+        </button>
+        <button type="button" class="btn btn-ghost" id="resetMsg">Reset message</button>
+      </div>
+      <div class="actions">
+        <a class="btn btn-mail" id="sendEmailNow" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Send email
+        </a>
+        <a class="btn btn-wa" id="sendWaNow" href="#" target="_blank" rel="noopener" aria-disabled="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          Send WhatsApp
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="sticky-mobile">
+  <button type="button" class="btn btn-mail" id="mEmail">Email selected</button>
+  <button type="button" class="btn btn-wa" id="mWa">WhatsApp queue</button>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="queue" id="queueBox">
+  <strong>WhatsApp queue</strong>
+  <div class="queue-status" id="queueStatus"></div>
+  <div class="actions" style="margin-top:10px">
+    <button type="button" class="btn btn-wa" id="queueNext">Open next</button>
+    <button type="button" class="btn btn-ghost" id="queueSkip">Skip</button>
+  </div>
+</div>
+
+<script>
+const DATA = __DATA_JSON__;
+const STORAGE_KEY = "nm_outreach_edits_v3";
+
+const state = {
+  selected: new Set(),
+  activeId: null,
+  queue: [],
+  queueIndex: 0,
+  originals: new Map(DATA.map(d => [d.id, { message: d.message, subject: d.subject, email: d.email, phone: d.phone, owner: d.owner }])),
+};
+
+function loadEdits() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const edits = JSON.parse(raw);
+    DATA.forEach(d => {
+      const e = edits[d.id];
+      if (!e) return;
+      if (e.message != null) d.message = e.message;
+      if (e.subject != null) d.subject = e.subject;
+      if (e.email != null) d.email = e.email;
+      if (e.phone != null) d.phone = normalizePhone(e.phone);
+      if (e.owner != null) d.owner = e.owner;
+      rebuildLinks(d);
+    });
+  } catch (_) {}
+}
+
+function saveEdits() {
+  const edits = {};
+  DATA.forEach(d => {
+    const o = state.originals.get(d.id);
+    if (!o) return;
+    if (d.message !== o.message || d.subject !== o.subject || d.email !== o.email || d.phone !== o.phone || d.owner !== o.owner) {
+      edits[d.id] = { message: d.message, subject: d.subject, email: d.email, phone: d.phone, owner: d.owner };
+    }
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(edits));
+}
+
+function normalizePhone(raw) {
+  if (!raw) return "";
+  const digits = String(raw).replace(/\D/g, "");
+  let m = digits.match(/(?:91)?([6-9]\d{9})$/);
+  return m ? "91" + m[1] : "";
+}
+
+function displayPhone(p) {
+  if (!p) return "";
+  if (p.length === 12 && p.startsWith("91")) return "+91 " + p.slice(2, 7) + " " + p.slice(7);
+  return p;
+}
+
+function rebuildLinks(d) {
+  d.phoneDisplay = displayPhone(d.phone);
+  d.emails = d.email ? [d.email] : [];
+  const subject = encodeURIComponent(d.subject || "");
+  const body = encodeURIComponent(d.message || "");
+  d.mailto = d.email ? `mailto:${d.email}?subject=${subject}&body=${body}` : "";
+  d.whatsapp = d.phone ? `https://wa.me/${d.phone}?text=${body}` : "";
+}
+
+DATA.forEach(rebuildLinks);
+loadEdits();
+
+const el = (id) => document.getElementById(id);
+
+function toast(msg) {
+  const t = el("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => (t.style.display = "none"), 2800);
+}
+
+function escapeHtml(s) {
+  return String(s || "").replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+
+function priClass(p) {
+  if (String(p).includes("P1")) return "p1";
+  if (String(p).includes("P2")) return "p2";
+  return "p3";
+}
+
+function filtered() {
+  const q = el("q").value.trim().toLowerCase();
+  const pri = el("priority").value;
+  const ch = el("channel").value;
+  return DATA.filter((d) => {
+    if (pri && !d.priority.includes(pri)) return false;
+    if (ch === "email" && !d.email) return false;
+    if (ch === "wa" && !d.phone) return false;
+    if (ch === "both" && !(d.email && d.phone)) return false;
+    if (ch === "missing" && (d.email && d.phone)) return false;
+    if (!q) return true;
+    const blob = [d.company, d.owner, d.industry, d.locality, d.offer, d.wrong, d.email, d.phoneDisplay].join(" ").toLowerCase();
+    return blob.includes(q);
+  });
+}
+
+function updateStats(list) {
+  el("totalCount").textContent = DATA.length;
+  el("visibleCount").textContent = list.length;
+  el("selectedCount").textContent = state.selected.size;
+  let emails = 0, wa = 0;
+  state.selected.forEach((id) => {
+    const d = DATA.find((x) => x.id === id);
+    if (!d) return;
+    if (d.email) emails++;
+    if (d.phone) wa++;
+  });
+  el("selectedEmails").textContent = emails;
+  el("selectedWa").textContent = wa;
+}
+
+function render() {
+  const list = filtered();
+  const tb = el("tbody");
+  tb.innerHTML = "";
+  list.forEach((d) => {
+    const tr = document.createElement("tr");
+    tr.dataset.id = d.id;
+    if (state.selected.has(d.id)) tr.classList.add("selected");
+    if (state.activeId === d.id) tr.classList.add("active");
+    tr.innerHTML = `
+      <td><input type="checkbox" data-id="${d.id}" ${state.selected.has(d.id) ? "checked" : ""} aria-label="Select ${escapeHtml(d.company)}" /></td>
+      <td class="company">
+        <strong>${escapeHtml(d.company)}</strong>
+        <div class="meta">${escapeHtml(d.industry)} · ${escapeHtml(d.locality)}</div>
+      </td>
+      <td><span class="pri ${priClass(d.priority)}">${escapeHtml(String(d.priority).split("—")[0].trim())}</span></td>
+      <td>
+        <div class="contact-line">${d.email ? escapeHtml(d.email) : '<span class="muted">No email — click Edit</span>'}</div>
+        <div class="contact-line">${d.phoneDisplay ? escapeHtml(d.phoneDisplay) : '<span class="muted">No WhatsApp — click Edit</span>'}</div>
+      </td>
+      <td><div class="msg-preview" title="${escapeHtml(d.message)}">${escapeHtml(d.message)}</div></td>
+      <td>
+        <div class="row-actions">
+          <button type="button" class="btn btn-ghost btn-sm" data-edit="${d.id}">Edit</button>
+          ${d.mailto ? `<a class="btn btn-mail btn-sm" href="${d.mailto}" data-stop>Email</a>` : ""}
+          ${d.whatsapp ? `<a class="btn btn-wa btn-sm" href="${d.whatsapp}" target="_blank" rel="noopener" data-stop>WA</a>` : ""}
+        </div>
+      </td>`;
+    tb.appendChild(tr);
+  });
+
+  tb.querySelectorAll('input[type=checkbox]').forEach((cb) => {
+    cb.addEventListener("click", (e) => e.stopPropagation());
+    cb.addEventListener("change", () => {
+      const id = Number(cb.dataset.id);
+      if (cb.checked) state.selected.add(id); else state.selected.delete(id);
+      render();
+    });
+  });
+  tb.querySelectorAll("[data-edit]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openEditor(Number(btn.dataset.edit));
+    });
+  });
+  tb.querySelectorAll("[data-stop]").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  tb.querySelectorAll("tr").forEach((tr) => {
+    tr.addEventListener("click", () => openEditor(Number(tr.dataset.id)));
+  });
+  updateStats(list);
+}
+
+function openEditor(id) {
+  const d = DATA.find((x) => x.id === id);
+  if (!d) return;
+  state.activeId = id;
+  el("drawerEmpty").hidden = true;
+  el("editForm").hidden = false;
+  el("drawerFoot").hidden = false;
+  el("drawer").classList.add("open");
+  el("drawerTitle").textContent = d.company;
+  el("drawerSub").textContent = `${d.industry} · ${d.locality}`;
+  el("editOwner").value = d.owner || "";
+  el("editEmail").value = d.email || "";
+  el("editPhone").value = d.phoneDisplay || d.phone || "";
+  el("editSubject").value = d.subject || "";
+  el("editMessage").value = d.message || "";
+  el("editWrong").textContent = d.wrong || "";
+  refreshSendButtons(d);
+  render();
+}
+
+function refreshSendButtons(d) {
+  const mail = el("sendEmailNow");
+  const wa = el("sendWaNow");
+  if (d.mailto) {
+    mail.href = d.mailto;
+    mail.removeAttribute("aria-disabled");
+    mail.style.opacity = "1";
+    mail.style.pointerEvents = "auto";
+  } else {
+    mail.href = "#";
+    mail.setAttribute("aria-disabled", "true");
+    mail.style.opacity = "0.45";
+    mail.style.pointerEvents = "none";
+  }
+  if (d.whatsapp) {
+    wa.href = d.whatsapp;
+    wa.removeAttribute("aria-disabled");
+    wa.style.opacity = "1";
+    wa.style.pointerEvents = "auto";
+  } else {
+    wa.href = "#";
+    wa.setAttribute("aria-disabled", "true");
+    wa.style.opacity = "0.45";
+    wa.style.pointerEvents = "none";
+  }
+}
+
+function applyEditorToActive(save) {
+  const d = DATA.find((x) => x.id === state.activeId);
+  if (!d) return null;
+  d.owner = el("editOwner").value.trim();
+  d.email = el("editEmail").value.trim();
+  d.phone = normalizePhone(el("editPhone").value);
+  d.subject = el("editSubject").value.trim();
+  d.message = el("editMessage").value;
+  rebuildLinks(d);
+  refreshSendButtons(d);
+  if (save) {
+    saveEdits();
+    toast("Saved. Email / WhatsApp links updated.");
+  }
+  return d;
+}
+
+el("saveEdit").addEventListener("click", () => {
+  applyEditorToActive(true);
+  render();
+});
+el("resetMsg").addEventListener("click", () => {
+  const d = DATA.find((x) => x.id === state.activeId);
+  if (!d) return;
+  const o = state.originals.get(d.id);
+  if (!o) return;
+  d.message = o.message;
+  d.subject = o.subject;
+  el("editMessage").value = d.message;
+  el("editSubject").value = d.subject;
+  rebuildLinks(d);
+  refreshSendButtons(d);
+  saveEdits();
+  toast("Message reset to original");
+  render();
+});
+["editEmail", "editPhone", "editSubject", "editMessage", "editOwner"].forEach((id) => {
+  el(id).addEventListener("input", () => applyEditorToActive(false));
+});
+
+el("closeDrawer").addEventListener("click", () => {
+  el("drawer").classList.remove("open");
+});
+
+el("q").addEventListener("input", render);
+el("priority").addEventListener("change", render);
+el("channel").addEventListener("change", render);
+
+el("selectVisible").addEventListener("click", () => {
+  filtered().forEach((d) => state.selected.add(d.id));
+  render();
+});
+el("clearSelect").addEventListener("click", () => {
+  state.selected.clear();
+  render();
+});
+el("checkAll").addEventListener("change", (e) => {
+  const list = filtered();
+  if (e.target.checked) list.forEach((d) => state.selected.add(d.id));
+  else list.forEach((d) => state.selected.delete(d.id));
+  render();
+});
+
+function selectedRows() {
+  return DATA.filter((d) => state.selected.has(d.id));
+}
+
+el("copyEmails").addEventListener("click", async () => {
+  const emails = selectedRows().map((d) => d.email).filter(Boolean);
+  if (!emails.length) return toast("No emails in selection — add emails in the Edit panel");
+  await navigator.clipboard.writeText(emails.join(", "));
+  toast(`Copied ${emails.length} email(s)`);
+});
+
+el("emailSelected").addEventListener("click", () => {
+  // persist any open edits first
+  applyEditorToActive(true);
+  const rows = selectedRows().filter((d) => d.email);
+  if (!rows.length) return toast("Select clients that have email (or add email in Edit panel)");
+  const subject = el("bulkSubject").value.trim() || "Website opportunity for your Navi Mumbai business";
+  const body = el("bulkBody").value.trim() || "Hi — I help Navi Mumbai businesses with modern websites, CRM and simple invoicing/dashboards. I can share a free homepage mock if useful. Reply and I’ll send details.";
+  const emails = rows.map((d) => d.email);
+  const chunks = [];
+  let cur = [], len = 0;
+  emails.forEach((addr) => {
+    if (len + addr.length > 1200 && cur.length) { chunks.push(cur); cur = []; len = 0; }
+    cur.push(addr); len += addr.length + 1;
+  });
+  if (cur.length) chunks.push(cur);
+  chunks.forEach((chunk, i) => {
+    const url = `mailto:?bcc=${encodeURIComponent(chunk.join(","))}&subject=${encodeURIComponent(subject + (chunks.length > 1 ? ` (${i + 1}/${chunks.length})` : ""))}&body=${encodeURIComponent(body)}`;
+    window.location.href = url;
+  });
+  toast(`Opened mail for ${rows.length} recipient(s)`);
+});
+
+function showQueue() {
+  el("queueBox").style.display = "block";
+  const d = state.queue[state.queueIndex];
+  el("queueStatus").textContent = d
+    ? `${state.queueIndex + 1} / ${state.queue.length} — ${d.company} (${d.phoneDisplay || d.phone})`
+    : "Queue finished";
+}
+function openCurrentWa() {
+  const d = state.queue[state.queueIndex];
+  if (!d) {
+    el("queueBox").style.display = "none";
+    toast("WhatsApp queue complete");
+    return;
+  }
+  rebuildLinks(d);
+  window.open(d.whatsapp, "_blank", "noopener");
+  showQueue();
+}
+
+el("waSelected").addEventListener("click", () => {
+  applyEditorToActive(true);
+  const rows = selectedRows().filter((d) => d.phone);
+  if (!rows.length) return toast("Select clients with WhatsApp mobile (or add phone in Edit panel)");
+  state.queue = rows;
+  state.queueIndex = 0;
+  showQueue();
+  openCurrentWa();
+  toast("Allow popups if blocked. Send in WhatsApp, then Open next.");
+});
+el("queueNext").addEventListener("click", () => { state.queueIndex += 1; openCurrentWa(); });
+el("queueSkip").addEventListener("click", () => { state.queueIndex += 1; openCurrentWa(); });
+el("stopQueue").addEventListener("click", () => {
+  state.queue = [];
+  state.queueIndex = 0;
+  el("queueBox").style.display = "none";
+  toast("Queue stopped");
+});
+
+el("mEmail").addEventListener("click", () => el("emailSelected").click());
+el("mWa").addEventListener("click", () => el("waSelected").click());
+
+el("sendEmailNow").addEventListener("click", (e) => {
+  applyEditorToActive(true);
+  const d = DATA.find((x) => x.id === state.activeId);
+  if (!d || !d.mailto) {
+    e.preventDefault();
+    toast("Add an email in the Edit panel first");
+  }
+});
+el("sendWaNow").addEventListener("click", (e) => {
+  applyEditorToActive(true);
+  const d = DATA.find((x) => x.id === state.activeId);
+  if (!d || !d.whatsapp) {
+    e.preventDefault();
+    toast("Add a valid 10-digit Indian mobile in the Edit panel first");
+  } else {
+    e.currentTarget.href = d.whatsapp;
+  }
+});
+
+render();
+</script>
+</body>
+</html>
