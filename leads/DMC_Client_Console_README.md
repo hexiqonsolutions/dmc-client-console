@@ -26,7 +26,7 @@ Double-click:
 3. Click a company → edit draft if needed
 4. **Send Email (1-click)** or **WhatsApp (1-click)**
 
-Signed as **Vaibhav Gurav · DMC Creatives Studio · www.dmcstudio.in · +91 83693 61785**
+Signed as **Vaibhav Gurav · DMC Creatives Studio · hello@dmcstudio.in · www.dmcstudio.in · +91 83693 61785**
 
 ## Regenerate
 

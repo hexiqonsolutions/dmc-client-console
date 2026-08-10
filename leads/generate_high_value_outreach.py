@@ -24,6 +24,7 @@ SIGN = (
     "Regards,\n"
     "Vaibhav Gurav\n"
     "DMC Creatives Studio\n"
+    "hello@dmcstudio.in\n"
     "www.dmcstudio.in\n"
     "+91 83693 61785"
 )
@@ -180,6 +181,7 @@ def whatsapp_msg(r: dict) -> str:
         f"We can help with {offer.lower()}. If useful, I can share a quick redesign concept — no obligation.\n\n"
         "Vaibhav Gurav\n"
         "DMC Creatives Studio\n"
+        "hello@dmcstudio.in\n"
         "www.dmcstudio.in\n"
         "+91 83693 61785"
     )
@@ -697,7 +699,7 @@ textarea {{ min-height: 260px; line-height: 1.45; font-family: var(--font); }}
 <body>
 <header>
   <h1>DMC Client Console</h1>
-  <p>Mumbai + Navi Mumbai + Thane high-value clients with outdated websites. Personalized email & WhatsApp drafts. Signed as Vaibhav Gurav · DMC Creatives Studio.</p>
+  <p>Mumbai + Navi Mumbai + Thane high-value clients with outdated websites. Personalized email & WhatsApp drafts. Signed as Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.</p>
 </header>
 <div class="toolbar">
   <input type="search" id="q" placeholder="Search company, person, industry, locality…" />
