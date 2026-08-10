@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DATA = json.loads((ROOT / "genuine_nm_100.json").read_text(encoding="utf-8"))
 OUT = ROOT / "Genuine_NM_Console.html"
+PAGES_INDEX = ROOT.parent / "index.html"  # GitHub Pages homepage
 
 rows_js = json.dumps(DATA, ensure_ascii=False)
 
@@ -151,6 +152,7 @@ if (ROWS[0]) show(ROWS[0].id);
 """
 
 OUT.write_text(html, encoding="utf-8")
-print(f"Wrote {OUT.name} with {len(DATA)} leads")
+PAGES_INDEX.write_text(html, encoding="utf-8")
+print(f"Wrote {OUT.name} + {PAGES_INDEX.name} with {len(DATA)} leads")
 print(f"Owners: {sum(1 for x in DATA if x.get('owner'))}")
 print(f"Emails: {sum(1 for x in DATA if x.get('email') and '@' in x['email'])}")
