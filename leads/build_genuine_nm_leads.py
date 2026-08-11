@@ -153,42 +153,214 @@ def score(row: dict) -> int:
     return s
 
 
+def first_name(owner: str) -> str:
+    if not owner or "not found" in owner.lower():
+        return ""
+    cleaned = re.sub(r"^(Dr\.?|Adv\.?|CA|Mr\.?|Mrs\.?|Ms\.?)\s+", "", owner.strip(), flags=re.I)
+    part = re.split(r"[\s,/]", cleaned)[0]
+    if len(part) < 2:
+        return ""
+    # Skip initials like R.R. / A.K.
+    if re.fullmatch(r"[A-Za-z]\.?[A-Za-z]\.?", part) or (part.count(".") >= 1 and len(part) <= 5):
+        return ""
+    return part
+
+
+def site_label(row: dict) -> str:
+    w = (row.get("website") or "").strip()
+    if not w.startswith("http"):
+        return ""
+    w = re.sub(r"/\(S\([^)]+\)\)", "", w)
+    m = re.match(r"(https?://[^/\s]+)", w, re.I)
+    if not m:
+        return w
+    host = m.group(1).rstrip("/") + "/"
+    path = w[len(m.group(1)) :]
+    if not path or path in {"/", "/index.html", "/index.php"} or len(path) > 40 or "ExternalSite" in path or "aspx" in path.lower():
+        return host
+    return w.split("?")[0].rstrip("/") + ("/" if w.endswith("/") else "")
+
+
+def split_issues(text: str) -> list[str]:
+    parts = re.split(r"[;•\n]+", text or "")
+    return [p.strip(" -•").strip() for p in parts if p.strip()]
+
+
+def plain_issue(raw: str, industry: str = "") -> str:
+    """Turn internal audit notes into something a business owner recognises."""
+    t = (raw or "").strip()
+    low = t.lower()
+    ind = (industry or "").lower()
+
+    if "no owned website" in low or low.startswith("no website") or "only zomato" in low or "only swiggy" in low:
+        return "You don't have your own website — people only find you on Zomato/Swiggy/Google, so they order there instead of from you"
+    if "http 500" in low or "500 error" in low or "intermittently errors" in low or "returns server error" in low or "intermittently 500" in low or "returns 500" in low:
+        return "Your website sometimes opens an error page (I got a 500) instead of your homepage"
+    if "lorem ipsum" in low:
+        return "Placeholder 'Lorem ipsum' dummy text is still visible on the site"
+    if "hello world" in low:
+        return "A leftover WordPress 'Hello world!' blog post is still live"
+    if "stuck at 0" in low or "counters stuck" in low or "0+" in low or "0 locations" in low:
+        return "Homepage numbers/stats are stuck at 0 (looks unfinished to visitors)"
+    if "copyright" in low and ("2020" in low or "2021" in low or "2022" in low or "outdated" in low or "frozen" in low):
+        return "The copyright year on the site is old, so it looks abandoned"
+    if "http-only" in low or "still on http" in low or "no https" in low:
+        return "The site still opens on HTTP (no lock/HTTPS), which browsers flag as not secure"
+    if "@gmail" in low or "gmail-only" in low or "gmail for business" in low or "gmail as" in low or "gmail contact" in low or (
+        "gmail" in low and ("email" in low or "contact" in low)
+    ):
+        return "The public email on the site is a Gmail address, not a company email (e.g. info@yourbrand.in)"
+    if "yahoo" in low:
+        return "The public email on the site is a Yahoo address — that looks dated to customers"
+    if "needhelp@floens" in low or "fake support" in low or ("placeholder" in low and "number" in low):
+        return "Leftover template / fake contact details are still showing on the site — not your real number or email"
+    if "2012" in low and ("offer" in low or "valid" in low or "march" in low):
+        return "Old offers are still live on the site (one still says valid till 2012) — it looks abandoned"
+    if "lorem" in low or "mirth large" in low or "unfinished" in low or "[location]" in low:
+        return "Unfinished / dummy text is still visible on the live site"
+    if "encoding" in low or "mojibake" in low or "glitch" in low:
+        return "Reviews/text on the site show broken characters, so it looks unmaintained"
+    if "instagram" in low or "facebook" in low and ("broken" in low or "token" in low or "#0" in low):
+        return "Social/Instagram links on the site are broken and don't open your real pages"
+    if "phone not" in low or "homepage lacks prominent phone" in low or "phone not on homepage" in low:
+        return "The phone number is missing from the homepage — people can't call you from the first screen"
+    if "no public email" in low or "no visible business email" in low:
+        return "There's no business email listed on the site, so serious enquiries have nowhere professional to write"
+    if "elementor" in low and ("watermark" in low or "footer" in low):
+        return "The footer still shows leftover website-builder / agency watermarks"
+    if "viewport" in low or "weak mobile" in low or "mobile ux" in low:
+        return "The site is hard to use on a phone — it doesn't fit the screen properly"
+    if "wix" in low:
+        return "The site is a basic Wix brochure page — it doesn't look like a serious local brand"
+    if "swiggy" in low or "zomato" in low:
+        return "The site still pushes people to Swiggy/Zomato instead of letting them order/book with you directly"
+    if "practo" in low:
+        return "The site still sends patients to Practo to book, instead of capturing the appointment on your own page"
+    if "template leftovers" in low or "fit365" in low or "luxe haven" in low or "solox" in low or "info@mysite.com" in low:
+        return "The site still has leftover template branding that isn't yours"
+    if "no whatsapp" in low or "no clear online booking" in low or "no online booking" in low or "call-only" in low or "phone-only" in low or "phone-first" in low:
+        if any(x in ind for x in ("dental", "clinic", "hospital", "health", "physio", "salon", "spa")):
+            return "There's no clear Book Appointment button — patients have to hunt for a phone number"
+        if any(x in ind for x in ("hotel", "banquet", "guest")):
+            return "There's no clear Book Room / Check Availability button, so guests go to Booking.com instead"
+        if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b")):
+            return "There's no Order Online / Book a table button on the homepage"
+        return "There's no clear Book / Enquire button — visitors have to call instead of converting on the site"
+    if "no online order" in low or "no cart" in low or "thin menu" in low:
+        return "There's no proper online order/menu checkout — people bounce to Swiggy/Zomato"
+    if "ota" in low or "direct-booking" in low or "direct booking" in low:
+        return "Room/event booking still depends on OTAs instead of a simple booking form on your own site"
+    if "google sites" in low:
+        return "The site is a basic Google Sites page — not a proper company website for high-ticket work"
+    if "typo" in low:
+        # keep the actual typo examples if present
+        m = re.search(r"['\"]([^'\"]{3,40})['\"]", t)
+        if m:
+            return f"There are typos on the homepage (e.g. '{m.group(1)}') that look unprofessional"
+        return "There are typos on the homepage that look unprofessional"
+    if "broken" in low and ("link" in low or "icon" in low or "social" in low or "#0" in low):
+        return "Some buttons/links on the site don't go anywhere (broken / leftover links)"
+    if "template" in low or "elementor" in low or "wix" in low or "brochure" in low:
+        if any(x in ind for x in ("dental", "clinic", "hospital")):
+            return "The site looks like a generic clinic template — not a brand patients would trust over a nearby competitor"
+        if any(x in ind for x in ("interior",)):
+            return "The site looks like SEO/template pages rather than a real project portfolio"
+        return "The site looks like a generic template rather than your brand"
+    if "thin" in low or "dated" in low or "old html" in low or "php" in low:
+        return "The pages look dated and thin — visitors don't get enough proof to call"
+    # fallback: shorten but keep meaning
+    cleaned = re.sub(r"\s+", " ", t).strip()
+    if len(cleaned) > 140:
+        cleaned = cleaned[:137].rsplit(" ", 1)[0] + "…"
+    return cleaned[0].upper() + cleaned[1:] if cleaned else t
+
+
+def industry_why(industry: str) -> str:
+    ind = (industry or "").lower()
+    if "dental" in ind:
+        return "Patients Google a dentist, open 2–3 sites, and book the one that looks easiest. Right now yours makes them call and wait."
+    if any(x in ind for x in ("hospital", "health", "physio", "ivf", "diagnostic", "maternity", "dermat")):
+        return "Patients compare clinics on their phone before they call. A clearer booking page usually wins the appointment."
+    if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b", "cater")):
+        return "Hungry customers open your site to order or book a table. If that's hard, they go to Zomato/Swiggy and you lose the margin."
+    if any(x in ind for x in ("hotel", "banquet", "guest")):
+        return "Guests who land on your site should be able to check dates and book. If they can't, they pay Booking.com instead of you."
+    if "interior" in ind:
+        return "Homeowners shortlist 3 designers from Google. A clear project gallery + quote form gets the site visit."
+    if any(x in ind for x in ("gym", "fitness", "yoga", "salon", "spa", "beauty")):
+        return "People decide memberships/appointments from the phone. If trial/booking isn't obvious, they join the competitor who made it easy."
+    if any(x in ind for x in ("coach", "education", "tutor")):
+        return "Parents compare institutes online. A demo-class / admission form on the site captures the enquiry before they call someone else."
+    if any(x in ind for x in ("packers", "travel", "real estate", "broker")):
+        return "High-ticket buyers want a trustworthy site with a quote form — directory pages make them hesitate."
+    return "People who find you on Google decide in a few seconds whether to enquire. The site should make that one tap, not a hunt."
+
+
+def client_points(row: dict, limit: int = 3) -> list[str]:
+    industry = row.get("industry") or ""
+    seen = set()
+    out = []
+    for raw in split_issues(row.get("_issues") or ""):
+        p = plain_issue(raw, industry)
+        key = p.lower()
+        if key in seen or len(p) < 20:
+            continue
+        seen.add(key)
+        out.append(p)
+        if len(out) >= limit:
+            break
+    return out or [plain_issue(row.get("_issues") or "", industry)]
+
+
 def draft_whatsapp(row: dict) -> str:
-    name = row.get("_owner") or ""
-    first = ""
-    if name and "not found" not in name.lower():
-        first = re.split(r"[\s,/]", name.replace("Dr.", "").replace("Dr ", "").strip())[0]
-    greet = f"Hi {first}," if first and len(first) > 1 else "Hello,"
+    first = first_name(row.get("_owner") or "")
+    greet = f"Hi {first}," if first else "Hello,"
     company = row["company"]
-    locality = row.get("locality") or "Navi Mumbai"
-    issue = row["_issues"].split(";")[0].strip()
-    offer = row.get("offer") or row.get("why_buy") or "a modern website that gets enquiries"
+    url = site_label(row)
+    points = client_points(row, 2)
+    bullets = "\n".join(f"• {p}" for p in points)
+    why = industry_why(row.get("industry") or "")
+    if url:
+        opened = f"I opened your website ({url}) and a couple of things stood out:\n{bullets}"
+    else:
+        opened = f"I searched for {company} online and a couple of things stood out:\n{bullets}"
     return (
         f"{greet}\n\n"
-        f"I'm Vaibhav from DMC Creatives Studio. I reviewed {company} ({locality}) "
-        f"and noticed: {issue}\n\n"
-        f"I can share a free one-page redesign / ordering concept for {company} this week — no obligation.\n\n"
+        f"I'm Vaibhav from DMC Creatives Studio. {opened}\n\n"
+        f"{why}\n\n"
+        f"I can send a free one-page concept for {company} this week so you can see the difference — no charge, no obligation.\n\n"
         f"Vaibhav Gurav\nDMC Creatives Studio\nwww.dmcstudio.in\n+91 83693 61785"
     )
 
 
 def draft_email(row: dict) -> tuple[str, str]:
-    name = row.get("_owner") or ""
-    first = ""
-    if name and "not found" not in name.lower():
-        first = re.split(r"[\s,/]", name.replace("Dr.", "").replace("Dr ", "").strip())[0]
-    greet = f"Dear {first}," if first and len(first) > 1 else "Hello,"
+    first = first_name(row.get("_owner") or "")
+    greet = f"Dear {first}," if first else "Hello,"
     company = row["company"]
-    subject = f"{company}: quick note on your website"
+    url = site_label(row)
+    locality = row.get("locality") or "Navi Mumbai"
+    points = client_points(row, 3)
+    bullets = "\n".join(f"• {p}" for p in points)
+    why = industry_why(row.get("industry") or "")
+    if url:
+        subject = f"{company}: I checked {url.replace('https://','').replace('http://','').rstrip('/')}"
+        opened = f"I opened {url} while looking at {industry_label_short(row.get('industry') or 'local')} businesses in {locality}."
+    else:
+        subject = f"{company}: no website of your own yet"
+        opened = f"I searched for {company} in {locality} — there's no owned website, only listings."
     body = (
         f"{greet}\n\n"
-        f"While reviewing businesses in {row.get('locality') or 'Navi Mumbai'}, I looked at {company}.\n\n"
-        f"Specific issues I found:\n{row['_issues']}\n\n"
-        f"{row.get('why_buy') or 'A clearer website usually converts more calls into booked customers.'}\n\n"
-        f"Happy to share a free concept for {company} this week — no obligation.\n\n"
+        f"{opened}\n\n"
+        f"Here's what a customer would notice today:\n{bullets}\n\n"
+        f"{why}\n\n"
+        f"I can share a free concept page for {company} this week so it's clear what I'd change — no obligation.\n\n"
         f"Regards,\nVaibhav Gurav\nDMC Creatives Studio\nhello@dmcstudio.in\nwww.dmcstudio.in\n+91 83693 61785"
     )
     return subject, body
+
+
+def industry_label_short(industry: str) -> str:
+    return (industry or "local").split("/")[0].strip().lower() or "local"
 
 
 def main() -> None:
@@ -271,6 +443,7 @@ def write_xlsx(rows: list[dict]) -> None:
     headers = [
         "ID", "Company", "Owner", "Phone", "Email", "Website", "Locality",
         "Industry", "Website Issues (specific)", "Why they'll buy", "Score",
+        "Email Subject", "Email Body", "WhatsApp Message",
         "WhatsApp Link", "Email Link", "Source",
     ]
     header_fill = PatternFill("solid", fgColor="1F3D2B")
@@ -285,13 +458,14 @@ def write_xlsx(rows: list[dict]) -> None:
         vals = [
             row["id"], row["company"], row["owner"], row["phone"], row["email"],
             row["website"], row["locality"], row["industry"], row["website_issues"],
-            row["why_buy"], row["score"], row["wa_link"], row["mailto"], row["source"],
+            row["why_buy"], row["score"], row.get("subject") or "", row.get("email_body") or "",
+            row.get("whatsapp_msg") or "", row["wa_link"], row["mailto"], row["source"],
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(r, c, v)
             cell.alignment = Alignment(wrap_text=True, vertical="top")
 
-    widths = [5, 28, 22, 16, 28, 34, 22, 16, 48, 36, 8, 18, 18, 24]
+    widths = [5, 28, 22, 16, 28, 34, 22, 16, 48, 36, 8, 36, 48, 48, 18, 18, 24]
     for i, w in enumerate(widths, 1):
         ws.column_dimensions[get_column_letter(i)].width = w
     ws.freeze_panes = "A2"
