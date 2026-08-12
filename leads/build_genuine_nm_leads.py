@@ -103,6 +103,11 @@ def qualify(row: dict) -> tuple[bool, str]:
                 break
     if not phone:
         return False, "no real phone"
+    # reject obviously fake / placeholder mobiles
+    if len(set(phone)) <= 2 or phone in {"9999999999", "8888888888", "7777777777", "6666666666"}:
+        return False, "fake phone"
+    if phone.startswith(("000", "111", "12345")):
+        return False, "fake phone"
 
     if phone in EXCLUDE_PHONES:
         return False, "phone already contacted/old list"
@@ -127,30 +132,121 @@ def qualify(row: dict) -> tuple[bool, str]:
     return True, "ok"
 
 
+def industry_bucket(industry: str) -> str:
+    ind = (industry or "").lower()
+    if "dental" in ind:
+        return "dental"
+    if any(x in ind for x in ("hospital", "maternity", "diagnostic", "physio", "dermat", "ent", "ophthal", "ortho", "ivf", "paediat", "health", "pet clinic", "nursing")):
+        return "medical"
+    if any(x in ind for x in ("banquet", "hotel", "guest", "wedding")):
+        return "hospitality"
+    if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b", "cater")):
+        return "fnb"
+    if any(x in ind for x in ("salon", "spa", "beauty")):
+        return "salon"
+    if any(x in ind for x in ("gym", "fitness", "yoga")):
+        return "fitness"
+    if "interior" in ind:
+        return "interior"
+    if any(x in ind for x in ("coach", "education", "tutor", "tuition")):
+        return "education"
+    if any(x in ind for x in ("packer", "travel", "real estate", "broker")):
+        return "services"
+    return "other"
+
+
+# Soft caps so the published list is conversion-diverse (not dental-heavy).
+INDUSTRY_CAPS = {
+    "dental": 10,
+    "interior": 12,
+    "education": 8,
+    "services": 10,
+    "other": 12,
+    "fitness": 8,
+    "salon": 10,
+    "fnb": 14,
+    "hospitality": 14,
+    "medical": 70,  # prioritize medical / specialty clinics
+}
+
+
 def score(row: dict) -> int:
+    """Higher score = better chance of client conversion for outreach."""
     s = 0
-    if row.get("_owner") and "not found" not in row["_owner"].lower():
-        s += 30
-    if "@" in (row.get("email") or "") and "not found" not in (row.get("email") or "").lower():
-        s += 15
+    owner = (row.get("_owner") or "").strip()
+    if owner and "not found" not in owner.lower():
+        s += 35
+        if owner.lower().startswith("dr") or "dr." in owner.lower():
+            s += 8  # medical decision-makers often reply faster
+    email = (row.get("email") or "").strip()
+    if "@" in email and "not found" not in email.lower():
+        s += 18
+        if not any(x in email.lower() for x in ("gmail.", "yahoo.", "hotmail.", "rediff.")):
+            s += 6  # branded email usually means more serious buyer
     if row.get("website", "").startswith("http"):
-        s += 20
+        s += 15
+
+    bucket = industry_bucket(row.get("industry") or "")
+    # Conversion priority: medical + hospitality/F&B/salon over dental
+    bucket_pts = {
+        "medical": 40,
+        "hospitality": 28,
+        "fnb": 26,
+        "salon": 22,
+        "fitness": 16,
+        "interior": 14,
+        "education": 12,
+        "services": 10,
+        "other": 8,
+        "dental": -25,  # demote — list was oversaturated
+    }
+    s += bucket_pts.get(bucket, 0)
+
     issues = row.get("_issues", "").lower()
     for k, pts in [
-        ("no website", 25),
+        ("no booking", 22),
+        ("online booking", 16),
         ("no online order", 18),
-        ("no booking", 18),
-        ("gmail", 10),
+        ("order", 10),
+        ("whatsapp", 10),
+        ("gmail", 12),
         ("http", 12),
-        ("mobile", 10),
-        ("whatsapp", 8),
-        ("template", 10),
+        ("500", 18),
+        ("hello world", 20),
+        ("lorem", 18),
+        ("stuck at 0", 16),
+        ("0+", 12),
+        ("typo", 12),
+        ("template", 12),
         ("copyright", 8),
+        ("practo", 14),
+        ("zomato", 12),
+        ("swiggy", 12),
+        ("placeholder", 16),
+        ("broken", 14),
+        ("mobile", 8),
     ]:
         if k in issues:
             s += pts
-    s += min(len(row.get("_issues", "")) // 20, 15)
+    s += min(len(row.get("_issues", "")) // 18, 18)
     return s
+
+
+def select_with_caps(qualified: list[dict], target: int = 140) -> list[dict]:
+    """Pick highest-conversion leads while respecting industry diversity caps."""
+    qualified = sorted(qualified, key=lambda r: (-r["score"], r["company"].lower()))
+    selected: list[dict] = []
+    counts: Counter = Counter()
+    for row in qualified:
+        bucket = industry_bucket(row.get("industry") or "")
+        cap = INDUSTRY_CAPS.get(bucket, 12)
+        if counts[bucket] >= cap:
+            continue
+        selected.append(row)
+        counts[bucket] += 1
+        if len(selected) >= target:
+            break
+    return selected
 
 
 def first_name(owner: str) -> str:
@@ -277,11 +373,23 @@ def industry_why(industry: str) -> str:
     ind = (industry or "").lower()
     if "dental" in ind:
         return "Patients usually open 2–3 dentist sites on their phone and book the one that feels easiest. A clearer booking path often helps."
-    if any(x in ind for x in ("hospital", "health", "physio", "ivf", "diagnostic", "maternity", "dermat")):
+    if any(x in ind for x in ("ivf", "fertility")):
+        return "Fertility searches are high-intent. Couples usually shortlist clinics whose site feels clear and trustworthy before they call."
+    if any(x in ind for x in ("maternity", "gynae", "woman", "nursing")):
+        return "Expecting parents compare maternity options carefully online. Clear packages and easy booking often tip the decision."
+    if any(x in ind for x in ("diagnostic", "patholog", "lab", "imaging")):
+        return "People usually book labs from their phone for packages and home collection. A clearer booking path often wins that booking."
+    if any(x in ind for x in ("physio",)):
+        return "Patients looking for physio often book the clinic that makes the next session easiest to schedule."
+    if any(x in ind for x in ("dermat", "skin", "aesthetic")):
+        return "Skin and aesthetic consults are often decided after a quick look at treatment pages and how easy booking feels."
+    if any(x in ind for x in ("ent", "eye", "ophthal", "ortho", "pet")):
+        return "Specialty patients usually open 2–3 clinic sites and choose the one that feels clearest to book."
+    if any(x in ind for x in ("hospital", "health", "ivf", "diagnostic", "maternity", "dermat")):
         return "Most patients compare clinics on their phone before they call. A clearer booking page often makes that choice easier."
     if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b", "cater")):
         return "When someone is ready to order, they usually pick whichever option feels simplest. A clearer order/book path on your own site can help."
-    if any(x in ind for x in ("hotel", "banquet", "guest")):
+    if any(x in ind for x in ("hotel", "banquet", "guest", "wedding")):
         return "Guests who land on your site often want to check dates quickly. Making that easy can bring more direct bookings."
     if "interior" in ind:
         return "Homeowners usually shortlist 2–3 designers from Google. A clear project gallery and quote form often wins the site visit."
@@ -404,11 +512,17 @@ def main() -> None:
         qualified.append(row)
 
     qualified.sort(key=lambda r: (-r["score"], r["company"].lower()))
-    print(f"Qualified: {len(qualified)}")
+    print(f"Qualified before caps: {len(qualified)}")
     print("Rejected:", dict(rejected))
+    by_bucket = Counter(industry_bucket(r.get("industry") or "") for r in qualified)
+    print("Qualified buckets:", dict(by_bucket))
+
+    selected = select_with_caps(qualified, target=140)
+    print(f"Selected after diversity caps: {len(selected)}")
+    print("Selected buckets:", dict(Counter(industry_bucket(r.get("industry") or "") for r in selected)))
 
     final = []
-    for i, row in enumerate(qualified, 1):
+    for i, row in enumerate(selected, 1):
         subject, email_body = draft_email(row)
         wa = draft_whatsapp(row)
         phone = row["_phone"]

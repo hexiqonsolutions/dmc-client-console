@@ -1,0 +1,122 @@
+[
+  {
+    "company": "Grand Golden Banquet Hall",
+    "owner": "",
+    "phone": "8898681403",
+    "email": "",
+    "website": "https://grandgoldenbanquet.com/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Banquet",
+    "website_issues": "JS-only enquiry form fails without JavaScript; typos ('ocassion'); no visible phone/email on page body; banquet and 50-room stay poorly differentiated",
+    "why_buy": "Palm Beach Galleria venue should capture direct wedding enquiries instead of aggregator calls.",
+    "source": "https://grandgoldenbanquet.com/"
+  },
+  {
+    "company": "Nerul Gymkhana Arena One Banquet",
+    "owner": "",
+    "phone": "9323620423",
+    "email": "nerulgymkhana@gmail.com",
+    "website": "https://nerulgymkhana.com/facilities/arenaone/",
+    "locality": "Nerul, Navi Mumbai",
+    "industry": "Banquet",
+    "website_issues": "Gmail contact; event hire buried under club membership content; no dedicated banquet booking flow; phone-only venue hire",
+    "why_buy": "Arena One lawn searches need a standalone venue page with packages, not a buried club subpage.",
+    "source": "https://nerulgymkhana.com/facilities/arenaone/"
+  },
+  {
+    "company": "Laxmi Tutorials",
+    "owner": "",
+    "phone": "9323469947",
+    "email": "",
+    "website": "https://laxmitutorials.com/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Coaching Institute",
+    "website_issues": "Generic template testimonials with stock-style names; no faculty roster or fee/batch calendar; dual phones without WhatsApp CTA hierarchy; thin results proof",
+    "why_buy": "20+ year Kharghar coaching competes with Allen/Pace; admissions CRM + real results pages capture Sector 19 parents.",
+    "source": "https://laxmitutorials.com/"
+  },
+  {
+    "company": "Fishtawa Restaurant",
+    "owner": "",
+    "phone": "8591199232",
+    "email": "",
+    "website": "https://fishtawarestaurant.in/",
+    "locality": "Airoli, Navi Mumbai",
+    "industry": "Restaurant",
+    "website_issues": "Minimal single-page seafood site; phone-only reservation; no menu prices/PDF; no online order or WhatsApp deep-link; thin conversion beyond thali keywords",
+    "why_buy": "Airoli seafood demand is strong; menu + order path would fill tables and reduce delivery commissions.",
+    "source": "https://fishtawarestaurant.in/"
+  },
+  {
+    "company": "Hotel Victory Inn",
+    "owner": "",
+    "phone": "9004020247",
+    "email": "hotelvictoryinn2023@gmail.com",
+    "website": "https://hotelvictoryinn.in/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "Gmail for business contact; generic template; weak check-availability widget; likely OTA-dependent for real bookings",
+    "why_buy": "Vashi overnight travellers book fast—clearer rates and direct booking cut commissions.",
+    "source": "https://hotelvictoryinn.in/"
+  },
+  {
+    "company": "Hotel Pearl Vashi",
+    "owner": "",
+    "phone": "9594745823",
+    "email": "info@hotelpearlindia.com",
+    "website": "https://hotelpearlindia.com/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Hotel",
+    "website_issues": "Outdated design and copy errors; room booking path unclear; WhatsApp exists but site feels OTA-era; thin restaurant web presence",
+    "why_buy": "Budget-business hotel near Inorbit recovers margin with owned direct booking.",
+    "source": "https://hotelpearlindia.com/"
+  },
+  {
+    "company": "Interiors by Kanchan Kolge",
+    "owner": "Kanchan Kolge",
+    "phone": "9619055472",
+    "email": "",
+    "website": "https://kanchankolge.com/",
+    "locality": "Vashi, Navi Mumbai",
+    "industry": "Interior Design",
+    "website_issues": "No public email on contact page; lead form only slows inbound for clients who prefer email RFQs; thin conversion hierarchy",
+    "why_buy": "Founder-led Vashi studio converts better with multi-channel contact + project CRM.",
+    "source": "https://kanchankolge.com/"
+  },
+  {
+    "company": "Sai Packers and Movers",
+    "owner": "",
+    "phone": "9820350503",
+    "email": "",
+    "website": "https://saipackers.in/",
+    "locality": "Nerul / Vashi / Kharghar, Navi Mumbai",
+    "industry": "Packers & Movers",
+    "website_issues": "Contact page is phone-directory style with no email; dated multi-branch listing UX; weak quote CTA vs modern movers sites",
+    "why_buy": "Relocation enquiries are quote-driven; modern estimate form converts more local shifting leads.",
+    "source": "https://saipackers.in/contact/"
+  },
+  {
+    "company": "Shiv Krupa Packers and Movers",
+    "owner": "",
+    "phone": "9769499750",
+    "email": "",
+    "website": "https://shivkripapackersandmovers.com/",
+    "locality": "Kharghar, Navi Mumbai",
+    "industry": "Packers & Movers",
+    "website_issues": "Thin single-page presence; no email; limited trust/proof content (GST, insurance, reviews) for a high-fraud category",
+    "why_buy": "Packers need strong trust pages; thin site loses high-intent Kharghar shifting traffic.",
+    "source": "https://shivkripapackersandmovers.com/"
+  },
+  {
+    "company": "Kothari Packers and Movers",
+    "owner": "",
+    "phone": "9322512390",
+    "email": "info@kotharipackersandmovers.com",
+    "website": "https://kotharipackersandmovers.com/",
+    "locality": "Nerul / Kharghar, Navi Mumbai",
+    "industry": "Packers & Movers",
+    "website_issues": "City landing pages are repetitive SEO templates; typos ('Pakcers'); weak differentiation vs similarly named competitors",
+    "why_buy": "In a scam-heavy category, clearer brand proof and modern quote UX win Nerul/Kharghar moves.",
+    "source": "https://kotharipackersandmovers.com/"
+  }
+]
