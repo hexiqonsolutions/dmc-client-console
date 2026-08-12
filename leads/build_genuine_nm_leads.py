@@ -187,88 +187,86 @@ def split_issues(text: str) -> list[str]:
 
 
 def plain_issue(raw: str, industry: str = "") -> str:
-    """Turn internal audit notes into something a business owner recognises."""
+    """Turn internal audit notes into polite, specific observations."""
     t = (raw or "").strip()
     low = t.lower()
     ind = (industry or "").lower()
 
     if "no owned website" in low or low.startswith("no website") or "only zomato" in low or "only swiggy" in low:
-        return "You don't have your own website — people only find you on Zomato/Swiggy/Google, so they order there instead of from you"
+        return "Most people currently find you on listings (Google / Zomato / Swiggy) rather than a site of your own"
     if "http 500" in low or "500 error" in low or "intermittently errors" in low or "returns server error" in low or "intermittently 500" in low or "returns 500" in low:
-        return "Your website sometimes opens an error page (I got a 500) instead of your homepage"
+        return "On one visit the homepage showed an error instead of opening normally (this can happen if the server is overloaded)"
     if "lorem ipsum" in low:
-        return "Placeholder 'Lorem ipsum' dummy text is still visible on the site"
+        return "A little placeholder text is still visible — easy to replace with your own copy"
     if "hello world" in low:
-        return "A leftover WordPress 'Hello world!' blog post is still live"
+        return "A default WordPress sample post is still live; replacing it with a short update would feel more current"
     if "stuck at 0" in low or "counters stuck" in low or "0+" in low or "0 locations" in low:
-        return "Homepage numbers/stats are stuck at 0 (looks unfinished to visitors)"
+        return "A few numbers on the homepage still show 0 — visitors may think the page is still being set up"
     if "copyright" in low and ("2020" in low or "2021" in low or "2022" in low or "outdated" in low or "frozen" in low):
-        return "The copyright year on the site is old, so it looks abandoned"
+        return "The copyright year looks a little old, so some visitors may assume the site hasn't been updated recently"
     if "http-only" in low or "still on http" in low or "no https" in low:
-        return "The site still opens on HTTP (no lock/HTTPS), which browsers flag as not secure"
+        return "The site still opens without the browser lock (HTTPS). Adding it usually helps people feel safer sharing details"
     if "@gmail" in low or "gmail-only" in low or "gmail for business" in low or "gmail as" in low or "gmail contact" in low or (
         "gmail" in low and ("email" in low or "contact" in low)
     ):
-        return "The public email on the site is a Gmail address, not a company email (e.g. info@yourbrand.in)"
+        return "The public email is a Gmail address — a simple branded email (like info@yourbrand.in) often feels more professional"
     if "yahoo" in low:
-        return "The public email on the site is a Yahoo address — that looks dated to customers"
+        return "The public email is a Yahoo address — a branded company email usually feels more current"
     if "needhelp@floens" in low or "fake support" in low or ("placeholder" in low and "number" in low):
-        return "Leftover template / fake contact details are still showing on the site — not your real number or email"
+        return "A leftover template contact still appears on the site (not your real number/email) — worth swapping for yours"
     if "2012" in low and ("offer" in low or "valid" in low or "march" in low):
-        return "Old offers are still live on the site (one still says valid till 2012) — it looks abandoned"
+        return "An older offer is still showing (one still says valid till 2012) — updating it would make the page feel current"
     if "lorem" in low or "mirth large" in low or "unfinished" in low or "[location]" in low:
-        return "Unfinished / dummy text is still visible on the live site"
+        return "A small bit of unfinished / sample text is still visible — easy to tidy up"
     if "encoding" in low or "mojibake" in low or "glitch" in low:
-        return "Reviews/text on the site show broken characters, so it looks unmaintained"
+        return "A few reviews show broken characters; a quick text fix would make them easier to read"
     if "instagram" in low or "facebook" in low and ("broken" in low or "token" in low or "#0" in low):
-        return "Social/Instagram links on the site are broken and don't open your real pages"
+        return "The Instagram / Facebook links don't currently open your real pages — a small fix if you'd like people to follow you"
     if "phone not" in low or "homepage lacks prominent phone" in low or "phone not on homepage" in low:
-        return "The phone number is missing from the homepage — people can't call you from the first screen"
+        return "The phone number isn't easy to spot on the first screen — putting it in the header usually helps"
     if "no public email" in low or "no visible business email" in low:
-        return "There's no business email listed on the site, so serious enquiries have nowhere professional to write"
+        return "There isn't a visible business email yet, so some people may hesitate to write in"
     if "elementor" in low and ("watermark" in low or "footer" in low):
-        return "The footer still shows leftover website-builder / agency watermarks"
+        return "The footer still shows a website-builder credit — removing it is a small polish"
     if "viewport" in low or "weak mobile" in low or "mobile ux" in low:
-        return "The site is hard to use on a phone — it doesn't fit the screen properly"
+        return "On a phone the layout is a little tight — making it mobile-friendly usually helps a lot in Navi Mumbai"
     if "wix" in low:
-        return "The site is a basic Wix brochure page — it doesn't look like a serious local brand"
+        return "The site still has a simple builder look; a cleaner custom layout would better match your brand"
     if "swiggy" in low or "zomato" in low:
-        return "The site still pushes people to Swiggy/Zomato instead of letting them order/book with you directly"
+        return "Ordering currently points people to Swiggy/Zomato — a direct order option on your own site can keep more of the margin"
     if "practo" in low:
-        return "The site still sends patients to Practo to book, instead of capturing the appointment on your own page"
+        return "Appointments currently go through Practo — a simple booking option on your own site can capture more patients directly"
     if "template leftovers" in low or "fit365" in low or "luxe haven" in low or "solox" in low or "info@mysite.com" in low:
-        return "The site still has leftover template branding that isn't yours"
+        return "A little leftover template branding is still showing — replacing it with your own name/logo is a quick win"
     if "no whatsapp" in low or "no clear online booking" in low or "no online booking" in low or "call-only" in low or "phone-only" in low or "phone-first" in low:
         if any(x in ind for x in ("dental", "clinic", "hospital", "health", "physio", "salon", "spa")):
-            return "There's no clear Book Appointment button — patients have to hunt for a phone number"
+            return "A clear Book Appointment button on the homepage would make it easier for patients (many currently have to look for a number)"
         if any(x in ind for x in ("hotel", "banquet", "guest")):
-            return "There's no clear Book Room / Check Availability button, so guests go to Booking.com instead"
+            return "A simple Check Availability / Book button would help guests book with you instead of going to Booking.com"
         if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b")):
-            return "There's no Order Online / Book a table button on the homepage"
-        return "There's no clear Book / Enquire button — visitors have to call instead of converting on the site"
+            return "An Order Online or Book a table button on the homepage would make it easier for people who are ready to buy"
+        return "A clear Enquire / Book button on the homepage would make it easier for people who don't want to call first"
     if "no online order" in low or "no cart" in low or "thin menu" in low:
-        return "There's no proper online order/menu checkout — people bounce to Swiggy/Zomato"
+        return "There's no easy online order yet — a simple menu/checkout often keeps people from switching to Swiggy/Zomato"
     if "ota" in low or "direct-booking" in low or "direct booking" in low:
-        return "Room/event booking still depends on OTAs instead of a simple booking form on your own site"
+        return "Bookings still go through listing sites — a short form on your own page can help guests book with you directly"
     if "google sites" in low:
-        return "The site is a basic Google Sites page — not a proper company website for high-ticket work"
+        return "The current page is a basic Google Sites setup; a dedicated site would better match the quality of your work"
     if "typo" in low:
-        # keep the actual typo examples if present
         m = re.search(r"['\"]([^'\"]{3,40})['\"]", t)
         if m:
-            return f"There are typos on the homepage (e.g. '{m.group(1)}') that look unprofessional"
-        return "There are typos on the homepage that look unprofessional"
+            return f"A couple of small spelling slips on the homepage (e.g. '{m.group(1)}') — easy to fix, and it helps first impressions"
+        return "A couple of small spelling slips on the homepage — easy to fix, and it helps first impressions"
     if "broken" in low and ("link" in low or "icon" in low or "social" in low or "#0" in low):
-        return "Some buttons/links on the site don't go anywhere (broken / leftover links)"
+        return "A couple of buttons/links don't open a page yet — worth pointing them to the right place"
     if "template" in low or "elementor" in low or "wix" in low or "brochure" in low:
         if any(x in ind for x in ("dental", "clinic", "hospital")):
-            return "The site looks like a generic clinic template — not a brand patients would trust over a nearby competitor"
+            return "The layout still feels like a standard clinic template — a more personal look usually helps patients choose you"
         if any(x in ind for x in ("interior",)):
-            return "The site looks like SEO/template pages rather than a real project portfolio"
-        return "The site looks like a generic template rather than your brand"
+            return "The pages feel a little generic; a stronger project gallery would better show your actual work"
+        return "The layout still feels a little template-like — a more personal look would better reflect your brand"
     if "thin" in low or "dated" in low or "old html" in low or "php" in low:
-        return "The pages look dated and thin — visitors don't get enough proof to call"
-    # fallback: shorten but keep meaning
+        return "The pages are a little light on detail — a bit more proof (photos, services, reviews) usually helps people feel ready to call"
     cleaned = re.sub(r"\s+", " ", t).strip()
     if len(cleaned) > 140:
         cleaned = cleaned[:137].rsplit(" ", 1)[0] + "…"
@@ -278,22 +276,22 @@ def plain_issue(raw: str, industry: str = "") -> str:
 def industry_why(industry: str) -> str:
     ind = (industry or "").lower()
     if "dental" in ind:
-        return "Patients Google a dentist, open 2–3 sites, and book the one that looks easiest. Right now yours makes them call and wait."
+        return "Patients usually open 2–3 dentist sites on their phone and book the one that feels easiest. A clearer booking path often helps."
     if any(x in ind for x in ("hospital", "health", "physio", "ivf", "diagnostic", "maternity", "dermat")):
-        return "Patients compare clinics on their phone before they call. A clearer booking page usually wins the appointment."
+        return "Most patients compare clinics on their phone before they call. A clearer booking page often makes that choice easier."
     if any(x in ind for x in ("bakery", "cafe", "restaurant", "f&b", "cater")):
-        return "Hungry customers open your site to order or book a table. If that's hard, they go to Zomato/Swiggy and you lose the margin."
+        return "When someone is ready to order, they usually pick whichever option feels simplest. A clearer order/book path on your own site can help."
     if any(x in ind for x in ("hotel", "banquet", "guest")):
-        return "Guests who land on your site should be able to check dates and book. If they can't, they pay Booking.com instead of you."
+        return "Guests who land on your site often want to check dates quickly. Making that easy can bring more direct bookings."
     if "interior" in ind:
-        return "Homeowners shortlist 3 designers from Google. A clear project gallery + quote form gets the site visit."
+        return "Homeowners usually shortlist 2–3 designers from Google. A clear project gallery and quote form often wins the site visit."
     if any(x in ind for x in ("gym", "fitness", "yoga", "salon", "spa", "beauty")):
-        return "People decide memberships/appointments from the phone. If trial/booking isn't obvious, they join the competitor who made it easy."
+        return "People often decide trial/memberships from their phone. A simple booking button usually makes that easier."
     if any(x in ind for x in ("coach", "education", "tutor")):
-        return "Parents compare institutes online. A demo-class / admission form on the site captures the enquiry before they call someone else."
+        return "Parents compare institutes online first. A simple demo-class / enquiry form often captures the interest while it's warm."
     if any(x in ind for x in ("packers", "travel", "real estate", "broker")):
-        return "High-ticket buyers want a trustworthy site with a quote form — directory pages make them hesitate."
-    return "People who find you on Google decide in a few seconds whether to enquire. The site should make that one tap, not a hunt."
+        return "For this kind of work, people like a clear, trustworthy site with an easy way to ask for a quote."
+    return "People who find you on Google usually decide in a few seconds whether to enquire. A clearer next step on the site often helps."
 
 
 def client_points(row: dict, limit: int = 3) -> list[str]:
@@ -321,14 +319,20 @@ def draft_whatsapp(row: dict) -> str:
     bullets = "\n".join(f"• {p}" for p in points)
     why = industry_why(row.get("industry") or "")
     if url:
-        opened = f"I opened your website ({url}) and a couple of things stood out:\n{bullets}"
+        opened = (
+            f"I came across {company} and had a look at {url}. "
+            f"Hope you don't mind me sharing a couple of small observations — only if useful:\n{bullets}"
+        )
     else:
-        opened = f"I searched for {company} online and a couple of things stood out:\n{bullets}"
+        opened = (
+            f"I came across {company} while looking at local businesses. "
+            f"Hope you don't mind me sharing a couple of small observations — only if useful:\n{bullets}"
+        )
     return (
         f"{greet}\n\n"
         f"I'm Vaibhav from DMC Creatives Studio. {opened}\n\n"
         f"{why}\n\n"
-        f"I can send a free one-page concept for {company} this week so you can see the difference — no charge, no obligation.\n\n"
+        f"If it would help, I can send a free one-page concept for {company} this week — no charge and no obligation, just so you can see the idea.\n\n"
         f"Vaibhav Gurav\nDMC Creatives Studio\nwww.dmcstudio.in\n+91 83693 61785"
     )
 
@@ -342,19 +346,27 @@ def draft_email(row: dict) -> tuple[str, str]:
     points = client_points(row, 3)
     bullets = "\n".join(f"• {p}" for p in points)
     why = industry_why(row.get("industry") or "")
+    host = url.replace("https://", "").replace("http://", "").rstrip("/") if url else ""
     if url:
-        subject = f"{company}: I checked {url.replace('https://','').replace('http://','').rstrip('/')}"
-        opened = f"I opened {url} while looking at {industry_label_short(row.get('industry') or 'local')} businesses in {locality}."
+        subject = f"A quick, polite note on {host}"
+        opened = (
+            f"I hope you're well. I'm Vaibhav from DMC Creatives Studio. "
+            f"While looking at {industry_label_short(row.get('industry') or 'local')} businesses in {locality}, "
+            f"I visited {url}."
+        )
     else:
-        subject = f"{company}: no website of your own yet"
-        opened = f"I searched for {company} in {locality} — there's no owned website, only listings."
+        subject = f"A quick note for {company}"
+        opened = (
+            f"I hope you're well. I'm Vaibhav from DMC Creatives Studio. "
+            f"I came across {company} in {locality} — most of the online presence right now is through listings rather than a site of your own."
+        )
     body = (
         f"{greet}\n\n"
         f"{opened}\n\n"
-        f"Here's what a customer would notice today:\n{bullets}\n\n"
+        f"I wanted to share a few small observations, only in case they're helpful:\n{bullets}\n\n"
         f"{why}\n\n"
-        f"I can share a free concept page for {company} this week so it's clear what I'd change — no obligation.\n\n"
-        f"Regards,\nVaibhav Gurav\nDMC Creatives Studio\nhello@dmcstudio.in\nwww.dmcstudio.in\n+91 83693 61785"
+        f"If you'd like, I can share a free concept page for {company} this week so you can see what a clearer version might look like. No obligation at all.\n\n"
+        f"Warm regards,\nVaibhav Gurav\nDMC Creatives Studio\nhello@dmcstudio.in\nwww.dmcstudio.in\n+91 83693 61785"
     )
     return subject, body
 
