@@ -1,0 +1,87 @@
+[
+  {
+    "company": "Iceberg Salon & Cafe",
+    "category": "Salon + cafe",
+    "locality": "CBD Belapur, Navi Mumbai",
+    "estimated_start_year": null,
+    "start_year_confidence": "Estimated — reviews call it newly opened; year not confirmed",
+    "website_status": "A — No website",
+    "website_url": "",
+    "google_maps": "",
+    "instagram": "",
+    "phone": "9833122387",
+    "email": "",
+    "owner": "",
+    "evidence_newness": "Public reviews describe it as a new salon-and-cafe concept in Belapur. Founding year not confirmed.",
+    "website_opportunity": "Salon-plus-cafe in Sector 19 Belapur is listed on directories with a public phone, but no independent booking/menu website showed up. A booking site with menu, packages and WhatsApp would capture walk-ins and Google searchers.",
+    "recommended_website": "Salon + cafe booking website",
+    "source_links": [
+      "https://in.worldorgs.com/catalog/navi-mumbai/cafe/iceberg-salon-cafe"
+    ],
+    "confidence": "Medium — directory listing with phone; owner not named"
+  },
+  {
+    "company": "Sigma Waterproof & Construction",
+    "category": "Waterproofing / civil contractor",
+    "locality": "Kharghar, Navi Mumbai",
+    "estimated_start_year": null,
+    "start_year_confidence": "Unknown — site copyright 2015",
+    "website_status": "B — Poor website",
+    "website_url": "https://www.sigmawaterproofing.com/contact.html",
+    "google_maps": "",
+    "instagram": "",
+    "phone": "9867095648",
+    "email": "",
+    "owner": "Manoj Sharbidre",
+    "evidence_newness": "Not a 2025 startup. Site still shows © 2015 Sigma Construction / MediaExperts — redesign opportunity, not a new-business lead.",
+    "website_opportunity": "Director and two mobiles are on an outdated 2015 contact page. Waterproofing and rehab work in Kharghar is high-ticket; a project-gallery + enquiry site would replace a dead brochure page.",
+    "recommended_website": "Construction company website",
+    "source_links": [
+      "https://www.sigmawaterproofing.com/contact.html"
+    ],
+    "confidence": "High — contact page verified Aug 2026"
+  },
+  {
+    "company": "TRITOOLS MACHINERY PVT. LTD.",
+    "category": "Industrial machinery manufacturer",
+    "locality": "Rabale MIDC, Navi Mumbai",
+    "estimated_start_year": null,
+    "start_year_confidence": "Unknown",
+    "website_status": "B — Poor website",
+    "website_url": "https://www.tritoolsmachinery.co.in/contact-us.html",
+    "google_maps": "",
+    "instagram": "",
+    "phone": "8045479398",
+    "email": "",
+    "owner": "Aldrin D'Sousa",
+    "evidence_newness": "Established Rabale manufacturer. Not claimed as 2024–2026 new.",
+    "website_opportunity": "Public director mobile sits on an IndiaMART/Infocom template site. B2B buyers comparing machinery vendors expect a branded catalogue and RFQ form, not a marketplace skin.",
+    "recommended_website": "Manufacturer website",
+    "source_links": [
+      "https://www.tritoolsmachinery.co.in/contact-us.html?ID_57490_531_2908445=1"
+    ],
+    "confidence": "High — contact page verified Aug 2026"
+  },
+  {
+    "company": "Navi Mumbai Baking Café (NMBC)",
+    "category": "Cafe / bakery",
+    "locality": "Vashi Sector 30A, Navi Mumbai",
+    "estimated_start_year": 2026,
+    "start_year_confidence": "Strong evidence — June 2026 launch coverage",
+    "website_status": "C — Social media only",
+    "website_url": "",
+    "google_maps": "",
+    "instagram": "https://www.instagram.com/nmbcnavimumbai/",
+    "phone": "",
+    "email": "",
+    "owner": "",
+    "evidence_newness": "Press coverage of grand opening in Vashi next to Inorbit Mall, June 2026 (Passionate in Marketing / Travel and Tour World). Swiggy listing as Navi Mumbai Baking Co at Four Points by Sheraton Vashi.",
+    "website_opportunity": "Brand-new 24×7 cafe with PR spend and hotel-adjacent footfall, but no owned website found — bookings sit on Swiggy/listings. A restaurant site with menu, hours, location and WhatsApp would own the brand instead of aggregators.",
+    "recommended_website": "Restaurant website",
+    "source_links": [
+      "https://www.passionateinmarketing.com/navi-mumbai-baking-cafe-nmbc-opens-in-vashi-blending-artisanal-baking-with-contemporary-cafe-culture/",
+      "https://www.swiggy.com/restaurants/navi-mumbai-baking-company-sector-30a-vashi-772762/dineout"
+    ],
+    "confidence": "High for existence/newness; phone/owner not verified on an official page this round"
+  }
+]
