@@ -156,6 +156,7 @@ def draft_whatsapp(company: str, owner: str, locality: str, website: str, issues
         )
     return (
         f"{greet}\n\n"
+        f"Happy Independence Day to you and the team at {company}.\n\n"
         f"I'm Vaibhav from DMC Creatives Studio. {opened}\n\n"
         f"{why}\n\n"
         f"If it would help, I can send a free one-page concept for {company} this week — no charge and no obligation.\n\n"
@@ -185,6 +186,7 @@ def draft_email(company: str, owner: str, locality: str, website: str, issues: s
         )
     body = (
         f"{greet}\n\n"
+        f"Wishing you a happy Independence Day.\n\n"
         f"{opened}\n\n"
         f"I wanted to share a few small observations, only in case they're helpful:\n{pts}\n\n"
         f"{why}\n\n"
@@ -283,7 +285,7 @@ def main() -> None:
     html = out.read_text(encoding="utf-8")
     html = html.replace(
         "Mumbai + Navi Mumbai + Thane high-value clients with outdated websites. Personalized email & WhatsApp drafts. Signed as Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.",
-        "Navi Mumbai / MMR outreach — named contacts where public, WhatsApp & email drafts on every card. Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.",
+        "Independence Day outreach — every WhatsApp & email draft starts with a short 15 August wish. Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.",
     )
     for path in (
         ROOT / "DMC_Client_Console.html",
