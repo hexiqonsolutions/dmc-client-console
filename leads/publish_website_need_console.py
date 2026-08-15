@@ -13,8 +13,7 @@ import generate_high_value_outreach as hv
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
-NEED = ROOT / "website_need_100.json"
-GENUINE = ROOT / "genuine_nm_100.json"
+FRESH = ROOT / "fresh_launch_prospects.json"
 
 SKIP_COMPANY = (
     "apollo clinic",
@@ -258,20 +257,18 @@ def as_console_row(r: dict, *, keep_drafts: bool) -> dict | None:
 
 
 def main() -> None:
-    genuine = json.loads(GENUINE.read_text(encoding="utf-8"))
-    need = json.loads(NEED.read_text(encoding="utf-8"))
+    fresh = json.loads(FRESH.read_text(encoding="utf-8"))
     seen = set()
     merged: list[dict] = []
-    for src in (genuine, need):
-        for raw in src:
-            row = as_console_row(raw, keep_drafts=False)
-            if not row:
-                continue
-            key = company_key(row["company"])
-            if key in seen:
-                continue
-            seen.add(key)
-            merged.append(row)
+    for raw in fresh:
+        row = as_console_row(raw, keep_drafts=False)
+        if not row:
+            continue
+        key = company_key(row["company"])
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(row)
 
     # Named + phone first, then named, then the rest
     def rank(r: dict) -> tuple:
@@ -285,7 +282,7 @@ def main() -> None:
     html = out.read_text(encoding="utf-8")
     html = html.replace(
         "Mumbai + Navi Mumbai + Thane high-value clients with outdated websites. Personalized email & WhatsApp drafts. Signed as Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.",
-        "Independence Day outreach — every WhatsApp & email draft starts with a short 15 August wish. Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.",
+        "New interiors, shops and launches in Mumbai / Navi Mumbai / Thane — weak or missing websites only. Independence Day wish on every draft. Vaibhav Gurav · DMC Creatives · +91 83693 61785.",
     )
     for path in (
         ROOT / "DMC_Client_Console.html",
