@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build High-Value MMR client list + BuildView-style one-click outreach console."""
+"""Build Gulf (GCC) client list + BuildView-style one-click outreach console."""
 
 from __future__ import annotations
 
@@ -14,10 +14,9 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
 ROOT = Path(r"C:\Users\FPIN\Desktop\dm os\leads")
-SEED = ROOT / "_seed_from_existing.json"
-EXTRA = ROOT / "verified_extra_mmr.json"
+GULF = ROOT / "gulf_verified.json"
 JSON_OUT = ROOT / "high_value_prospects.json"
-XLSX_OUT = ROOT / "High_Value_MMR_Clients.xlsx"
+XLSX_OUT = ROOT / "Gulf_Clients.xlsx"
 HTML_OUT = ROOT / "DMC_Client_Console.html"
 
 SIGN = (
@@ -38,7 +37,8 @@ INDUSTRY_ANGLE = {
     "Real Estate / Design": "homebuyers and project clients judge your brand from the first project page they open",
     "Fitness": "memberships convert when the studio looks current and booking is one tap away",
     "Services": "serious clients still Google you — a weak site quietly costs you deals",
-    "Business": "buyers judge readiness from your website before they ever call",
+    "Trading": "importers and distributors lose RFQs when the catalogue site looks older than the stock",
+    "Business": "buyers in the Gulf judge readiness from your website before they ever call",
 }
 
 
@@ -62,19 +62,116 @@ def extract_emails(raw: str) -> list[str]:
     return out
 
 
-def extract_mobiles(raw: str) -> list[str]:
+GCC_CC = {
+    "971": "UAE",
+    "966": "Saudi Arabia",
+    "974": "Qatar",
+    "965": "Kuwait",
+    "973": "Bahrain",
+    "968": "Oman",
+}
+
+LOCALITY_CC = (
+    ("united arab", "971"),
+    ("u.a.e", "971"),
+    ("uae", "971"),
+    ("dubai", "971"),
+    ("abu dhabi", "971"),
+    ("sharjah", "971"),
+    ("ajman", "971"),
+    ("fujairah", "971"),
+    ("ras al khaimah", "971"),
+    ("umm al quwain", "971"),
+    ("saudi", "966"),
+    ("riyadh", "966"),
+    ("jeddah", "966"),
+    ("dammam", "966"),
+    ("khobar", "966"),
+    ("qatar", "974"),
+    ("doha", "974"),
+    ("kuwait", "965"),
+    ("bahrain", "973"),
+    ("manama", "973"),
+    ("sitra", "973"),
+    ("oman", "968"),
+    ("muscat", "968"),
+    ("sohar", "968"),
+    ("salalah", "968"),
+    ("barka", "968"),
+)
+
+# Mobile prefixes after country code
+GCC_MOBILE_RE = [
+    ("971", re.compile(r"^9715\d{8}$")),
+    ("966", re.compile(r"^9665\d{8}$")),
+    ("974", re.compile(r"^974[3567]\d{7}$")),
+    ("965", re.compile(r"^965[569]\d{7}$")),
+    ("973", re.compile(r"^973[36]\d{7}$")),
+    ("968", re.compile(r"^968[79]\d{7}$")),
+]
+
+
+def country_cc(locality: str) -> str:
+    low = (locality or "").lower()
+    for needle, cc in LOCALITY_CC:
+        if needle in low:
+            return cc
+    return ""
+
+
+def _digits(raw: str) -> str:
+    d = re.sub(r"\D", "", raw or "")
+    if d.startswith("00"):
+        d = d[2:]
+    return d
+
+
+def extract_mobiles(raw: str, locality: str = "") -> list[str]:
     if not raw:
         return []
     low = raw.lower()
     if "not found" in low or "gated" in low or "show number" in low:
         return []
-    compact = re.sub(r"[^\d+]", "", raw)
-    out: list[str] = []
-    for m in re.finditer(r"(?:91)?([6-9]\d{9})", compact):
-        num = "91" + m.group(1)
-        if num not in out:
-            out.append(num)
-    return out
+    found: list[str] = []
+
+    def add(num: str) -> None:
+        if not num or num in found:
+            return
+        for _, rx in GCC_MOBILE_RE:
+            if rx.match(num):
+                found.append(num)
+                return
+
+    digits = _digits(raw)
+    for pat in (
+        r"9715\d{8}",
+        r"9665\d{8}",
+        r"974[3567]\d{7}",
+        r"965[569]\d{7}",
+        r"973[36]\d{7}",
+        r"968[79]\d{7}",
+    ):
+        for m in re.finditer(pat, digits):
+            add(m.group(0))
+
+    cc = country_cc(locality)
+    for chunk in re.split(r"[,;/|]|WhatsApp|whatsapp|Tel|tel|Mob|mob", raw):
+        d = _digits(chunk)
+        if not d:
+            continue
+        if cc in {"971", "966"} and re.fullmatch(r"0?5\d{8}", d):
+            add(cc + d.lstrip("0"))
+        elif cc == "974" and re.fullmatch(r"0?[3567]\d{7}", d):
+            add("974" + d.lstrip("0"))
+        elif cc == "965" and re.fullmatch(r"0?[569]\d{7}", d):
+            add("965" + d.lstrip("0"))
+        elif cc == "973" and re.fullmatch(r"0?[36]\d{7}", d):
+            add("973" + d.lstrip("0"))
+        elif cc == "968" and re.fullmatch(r"0?[79]\d{7}", d):
+            add("968" + d.lstrip("0"))
+        else:
+            add(d)
+    return found
 
 
 def has_any_phone(raw: str) -> bool:
@@ -83,18 +180,26 @@ def has_any_phone(raw: str) -> bool:
     low = raw.lower()
     if "not found" in low or "gated" in low or "show number" in low:
         return False
-    digits = re.sub(r"\D", "", raw)
-    return bool(
-        re.search(r"[6-9]\d{9}", digits)
-        or re.search(r"0\d{9,11}", digits)
-        or len(digits) >= 10
-    )
+    digits = _digits(raw)
+    return len(digits) >= 8
 
 
 def display_phone(e164: str) -> str:
+    if e164.startswith("971") and len(e164) == 12:
+        return f"+971 {e164[3:5]} {e164[5:8]} {e164[8:]}"
+    if e164.startswith("966") and len(e164) == 12:
+        return f"+966 {e164[3:5]} {e164[5:8]} {e164[8:]}"
+    if e164.startswith("974") and len(e164) == 11:
+        return f"+974 {e164[3:7]} {e164[7:]}"
+    if e164.startswith("965") and len(e164) == 11:
+        return f"+965 {e164[3:7]} {e164[7:]}"
+    if e164.startswith("973") and len(e164) == 11:
+        return f"+973 {e164[3:7]} {e164[7:]}"
+    if e164.startswith("968") and len(e164) == 11:
+        return f"+968 {e164[3:7]} {e164[7:]}"
     if e164.startswith("91") and len(e164) == 12:
         return "+91 " + e164[2:7] + " " + e164[7:]
-    return e164
+    return "+" + e164 if e164 and not e164.startswith("+") else e164
 
 
 def first_name(dm: str) -> str:
@@ -119,8 +224,10 @@ def greeting(dm: str) -> str:
 def subject_line(company: str, industry: str, wrong: str) -> str:
     short = company.split("(")[0].strip()
     w = (wrong or "").lower()
-    if "no website" in w or "directory" in w or "indiamart" in w or "justdial" in w:
+    if "no website" in w or "directory" in w or "instagram" in w or "coming soon" in w or "no owned" in w:
         return f"{short}: buyers search Google before they call"
+    if "new" in w and ("business" in w or "launch" in w or "2024" in w or "2025" in w or "2026" in w):
+        return f"{short}: a new Gulf brand still needs a real website"
     if "http" in w and "https" not in w:
         return f"{short} is still on HTTP — that hurts trust"
     if industry == "Healthcare":
@@ -146,23 +253,30 @@ def email_body(r: dict) -> str:
     offer = r["offer"]
     g = greeting(r.get("owner_or_dm") or "")
     angle = INDUSTRY_ANGLE.get(industry, INDUSTRY_ANGLE["Business"])
-    area = locality or "Mumbai / Navi Mumbai / Thane"
+    area = locality or "the GCC"
+    lead_type = (r.get("lead_type") or "").lower()
     open_line = (
         f"While reviewing {industry.lower()} businesses in {area}, I came across {company}."
     )
-    if "no website" in wrong.lower() or "directory" in wrong.lower() or "indiamart" in wrong.lower():
+    wrong_l = wrong.lower()
+    if lead_type == "new_business" or "no website" in wrong_l or "coming soon" in wrong_l or "instagram" in wrong_l:
+        problem = (
+            f"{company} looks like a new / growing Gulf brand, but buyers still struggle "
+            "to find a strong owned website they can trust."
+        )
+    elif "no website" in wrong_l or "directory" in wrong_l:
         problem = f"{company} still lacks a strong owned website buyers can trust."
     else:
         problem = (
             f"I reviewed {company}'s current digital presence — it works, "
-            "but it no longer feels current or conversion-ready for today's market."
+            "but it no longer feels current or conversion-ready for today's GCC market."
         )
     body = (
         f"{g}\n\n"
         f"{open_line}\n\n"
         f"{problem}\n\n"
         f"In this category, {angle}.\n\n"
-        f"At DMC Creatives Studio we help MMR businesses with {offer.lower()}. "
+        f"At DMC Creatives Studio we help Gulf businesses with {offer.lower()}. "
         "Happy to share a free one-page concept for your brand this week — no obligation.\n\n"
         f"{SIGN}"
     )
@@ -173,11 +287,21 @@ def whatsapp_msg(r: dict) -> str:
     company = r["company"]
     g = greeting(r.get("owner_or_dm") or "")
     offer = r["offer"]
+    area = r.get("locality") or "the GCC"
+    lead_type = (r.get("lead_type") or "").lower()
+    if lead_type == "new_business":
+        notice = (
+            f"I was reviewing new businesses in {area} and noticed {company} still needs "
+            "a conversion-ready website for the Gulf market."
+        )
+    else:
+        notice = (
+            f"I was reviewing businesses in {area} and noticed {company}'s "
+            "website looks outdated for today's market."
+        )
     return (
         f"{g}\n\n"
-        f"I'm Vaibhav from DMC Creatives Studio. I was reviewing businesses in "
-        f"{r.get('locality') or 'Mumbai / Navi Mumbai / Thane'} and noticed {company}'s "
-        "website looks outdated for today's market.\n\n"
+        f"I'm Vaibhav from DMC Creatives Studio. {notice}\n\n"
         f"We can help with {offer.lower()}. If useful, I can share a quick redesign concept — no obligation.\n\n"
         "Vaibhav Gurav\n"
         "DMC Creatives Studio\n"
@@ -194,8 +318,8 @@ def normalize_row(raw: dict) -> dict | None:
     email_raw = raw.get("email") or ""
     phone_raw = raw.get("phone") or ""
     emails = extract_emails(email_raw)
-    mobiles = extract_mobiles(phone_raw)
-    if not emails and not has_any_phone(phone_raw):
+    mobiles = extract_mobiles(phone_raw, raw.get("locality") or "")
+    if not emails and not has_any_phone(phone_raw) and not mobiles:
         return None
     priority = raw.get("priority") or "Medium"
     if priority not in {"High", "Medium", "Low"}:
@@ -220,31 +344,30 @@ def normalize_row(raw: dict) -> dict | None:
         "offer": (raw.get("offer") or "Website redesign + lead capture").strip(),
         "value_note": (raw.get("value_note") or "").strip(),
         "source": (raw.get("source") or "").strip(),
+        "lead_type": (raw.get("lead_type") or "outdated_site").strip(),
+        "country": (raw.get("country") or "").strip(),
     }
 
 
 def load_all() -> list[dict]:
     rows: list[dict] = []
     seen = set()
-    for path in (SEED, EXTRA):
-        if not path.exists():
+    if not GULF.exists():
+        raise SystemExit(f"Missing {GULF}")
+    data = json.loads(GULF.read_text(encoding="utf-8"))
+    for raw in data:
+        n = normalize_row(raw)
+        if not n:
             continue
-        data = json.loads(path.read_text(encoding="utf-8"))
-        for raw in data:
-            n = normalize_row(raw)
-            if not n:
-                continue
-            key = n["company"].lower().strip()
-            if key in seen:
-                # Prefer row with email if duplicate
-                existing = next(x for x in rows if x["company"].lower().strip() == key)
-                if not existing["email"] and n["email"]:
-                    rows.remove(existing)
-                    rows.append(n)
-                continue
-            seen.add(key)
-            rows.append(n)
-    # Sort High first, then company
+        key = n["company"].lower().strip()
+        if key in seen:
+            existing = next(x for x in rows if x["company"].lower().strip() == key)
+            if not existing["email"] and n["email"]:
+                rows.remove(existing)
+                rows.append(n)
+            continue
+        seen.add(key)
+        rows.append(n)
     rows.sort(key=lambda r: (0 if r["priority"] == "High" else 1, r["company"].lower()))
     return rows
 
@@ -417,6 +540,8 @@ def write_html(rows: list[dict]) -> Path:
             "phone": r["primary_phone_display"] or r["phone"],
             "website": r["website"],
             "locality": r["locality"],
+            "country": r.get("country") or "",
+            "leadType": r.get("lead_type") or "",
             "wrong": r["wrong"],
             "offer": r["offer"],
             "valueNote": r["value_note"],
@@ -806,14 +931,20 @@ textarea {{ min-height: 220px; line-height: 1.45; font-family: var(--font); }}
 <body>
 <header>
   <h1>DMC Client Console</h1>
-  <p>Mumbai + Navi Mumbai + Thane high-value clients with outdated websites. Personalized email & WhatsApp drafts. Signed as Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.</p>
+  <p>UAE · Saudi Arabia · Qatar · Kuwait · Bahrain · Oman. New businesses that need a website, plus outdated sites ready for a rebuild. Signed as Vaibhav Gurav · DMC Creatives · hello@dmcstudio.in · +91 83693 61785.</p>
 </header>
 <div class="toolbar">
-  <input type="search" id="q" placeholder="Search company, person, industry, locality…" />
+  <input type="search" id="q" placeholder="Search company, person, industry, city, country…" />
   <select id="priority">
     <option value="All">All priorities</option>
     <option value="High">High</option>
     <option value="Medium">Medium</option>
+  </select>
+  <select id="country"><option value="All">All countries</option></select>
+  <select id="leadType">
+    <option value="All">All lead types</option>
+    <option value="new_business">New business</option>
+    <option value="outdated_site">Outdated website</option>
   </select>
   <select id="industry"><option value="All">All industries</option></select>
   <select id="contact">
@@ -841,6 +972,8 @@ const listEl = document.getElementById('list');
 const detailEl = document.getElementById('detail');
 const qEl = document.getElementById('q');
 const pEl = document.getElementById('priority');
+const countryEl = document.getElementById('country');
+const typeEl = document.getElementById('leadType');
 const iEl = document.getElementById('industry');
 const cEl = document.getElementById('contact');
 const toast = document.getElementById('toast');
@@ -849,6 +982,10 @@ let selected = null;
 [...new Set(CONTACTS.map(c => c.industry).filter(Boolean))].sort().forEach(c => {{
   const o = document.createElement('option');
   o.value = c; o.textContent = c; iEl.appendChild(o);
+}});
+[...new Set(CONTACTS.map(c => c.country || (c.locality || '').split(',').pop().trim()).filter(Boolean))].sort().forEach(c => {{
+  const o = document.createElement('option');
+  o.value = c; o.textContent = c; countryEl.appendChild(o);
 }});
 
 function toastMsg(msg) {{
@@ -862,11 +999,13 @@ function filtered() {{
   return CONTACTS.filter(c => {{
     if (pEl.value !== 'All' && c.priority !== pEl.value) return false;
     if (iEl.value !== 'All' && c.industry !== iEl.value) return false;
+    if (countryEl.value !== 'All' && c.country !== countryEl.value && !(c.locality || '').includes(countryEl.value)) return false;
+    if (typeEl.value !== 'All' && c.leadType !== typeEl.value) return false;
     if (cEl.value === 'email' && !c.email) return false;
     if (cEl.value === 'wa' && !c.waNumber) return false;
     if (cEl.value === 'both' && !(c.email && c.waNumber)) return false;
     if (!q) return true;
-    return `${{c.company}} ${{c.dm}} ${{c.des}} ${{c.industry}} ${{c.email}} ${{c.locality}} ${{c.offer}}`.toLowerCase().includes(q);
+    return `${{c.company}} ${{c.dm}} ${{c.des}} ${{c.industry}} ${{c.email}} ${{c.locality}} ${{c.country}} ${{c.offer}} ${{c.leadType}}`.toLowerCase().includes(q);
   }});
 }}
 
@@ -891,7 +1030,7 @@ function renderList() {{
   listEl.innerHTML = rows.map((c, idx) => `
     <div class="item ${{selected && selected.company === c.company ? 'active' : ''}}" data-company="${{c.company.replace(/"/g,'&quot;')}}" style="animation-delay:${{Math.min(idx, 12) * 30}}ms">
       <div class="co"><span class="prio ${{c.priority}}">${{c.priority}}</span>${{esc(c.company)}}</div>
-      <div class="meta">${{esc(c.industry)}} · ${{esc(c.dm) || 'No named contact'}} · ${{esc(c.locality)}}</div>
+      <div class="meta">${{esc(c.industry)}} · ${{esc(c.leadType === 'new_business' ? 'New business' : 'Outdated site')}} · ${{esc(c.dm) || 'No named contact'}} · ${{esc(c.locality)}}</div>
     </div>
   `).join('');
   listEl.querySelectorAll('.item').forEach(el => {{
@@ -999,6 +1138,8 @@ function renderDetail() {{
 
 qEl.addEventListener('input', renderList);
 pEl.addEventListener('change', renderList);
+countryEl.addEventListener('change', renderList);
+typeEl.addEventListener('change', renderList);
 iEl.addEventListener('change', renderList);
 cEl.addEventListener('change', renderList);
 window.addEventListener('resize', () => {{
@@ -1033,7 +1174,7 @@ def main() -> None:
     print(f"Wrote {JSON_OUT.name}")
     print(f"Wrote {XLSX_OUT.name}")
     print(f"Wrote {HTML_OUT.name}")
-    assert len(rows) >= 100, f"Expected 100+ contactable, got {len(rows)}"
+    assert len(rows) >= 40, f"Expected 40+ contactable Gulf leads, got {len(rows)}"
 
 
 if __name__ == "__main__":

@@ -1,37 +1,36 @@
-# DMC Client Console
+# DMC Client Console — Gulf
 
-BuildView-style one-click outreach for outdated-website clients in **Mumbai + Navi Mumbai + Thane**.
+BuildView-style one-click outreach for **new Gulf businesses that need a website** and **companies with outdated sites**. Coverage: **UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman**.
+
+Public emails and WhatsApp numbers only — nothing invented.
 
 ## Open the app
 
-Double-click:
+**Live:** https://hexiqonsolutions.github.io/dmc-client-console/
 
-**[DMC_Client_Console.html](./DMC_Client_Console.html)**
+Or double-click **[DMC_Client_Console.html](./DMC_Client_Console.html)**
 
 ## Files
 
 | File | Use |
 |---|---|
 | `DMC_Client_Console.html` | One-click Email / WhatsApp console |
-| `High_Value_MMR_Clients.xlsx` | CRM + clickable SEND EMAIL / SEND WHATSAPP |
-| `high_value_prospects.json` | Source data |
-| `verified_extra_mmr.json` | Researched contacts |
+| `Gulf_Clients.xlsx` | CRM + clickable SEND EMAIL / SEND WHATSAPP |
+| `gulf_verified.json` | Source contacts (public pages only) |
 | `generate_high_value_outreach.py` | Regenerate drafts + Excel + HTML |
-| `build_high_value_leads.py` | Rebuild seed + regenerate |
 
 ## How to use
 
-1. Open `DMC_Client_Console.html` in Chrome
-2. Filter by **High**, industry, or “Has WhatsApp”
-3. Click a company → edit draft if needed
-4. **Send Email (1-click)** or **WhatsApp (1-click)**
+1. Filter by country, **New business** vs **Outdated website**, industry, or WhatsApp
+2. Click a company → edit the draft if needed
+3. **Send Email (1-click)** or **WhatsApp (1-click)**
 
 Signed as **Vaibhav Gurav · DMC Creatives Studio · hello@dmcstudio.in · www.dmcstudio.in · +91 83693 61785**
 
 ## Regenerate
 
 ```bash
-python leads/build_high_value_leads.py
+python leads/generate_high_value_outreach.py
 ```
 
 Requires: `pip install openpyxl`
