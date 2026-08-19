@@ -14,7 +14,9 @@
     "offer": "Clinic website rebuild + appointment CRM",
     "value_note": "Named doctors on site; template content is clearly unfinished/outdated.",
     "source": "https://adammedicalcentre.com/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 6
   },
   {
     "company": "Up To Date Medical Center",
@@ -31,7 +33,9 @@
     "offer": "Clinic brand site + WhatsApp booking",
     "value_note": "Public WhatsApp on site.",
     "source": "https://uptodate.ae/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 5
   },
   {
     "company": "Sahara Medical Centre",
@@ -48,7 +52,9 @@
     "offer": "New-clinic website + booking funnel",
     "value_note": "Public WhatsApp and email on site.",
     "source": "https://saharamedicalcentre.ae/index.php/dental-clinic-sharjah/",
-    "lead_type": "new_business"
+    "lead_type": "new_business",
+    "contact_week": 1,
+    "contact_rank": 3
   },
   {
     "company": "Al Mahboob Lubricants & Oil Industries LLC",
@@ -65,7 +71,9 @@
     "offer": "Manufacturer catalogue site + RFQ WhatsApp CRM",
     "value_note": "WhatsApp published on homepage.",
     "source": "https://almahboobgroup.com/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 8
   },
   {
     "company": "AL Muraqib Fiber Glass Industry L.L.C",
@@ -82,7 +90,9 @@
     "offer": "Industrial product site + quotation form",
     "value_note": "sales@almuraqib.ae also published.",
     "source": "https://almuraqib.ae/contact-us/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 14
   },
   {
     "company": "AL RIYADA Metal Industrial LLC",
@@ -99,7 +109,9 @@
     "offer": "Fabrication catalogue + RFQ CRM",
     "value_note": "Public email and landline on homepage.",
     "source": "https://alriyadametals.com/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 13
   },
   {
     "company": "Smart Engineering Coating Equipment Trading",
@@ -133,7 +145,9 @@
     "offer": "Brand + private-label catalogue website",
     "value_note": "Two mobiles published.",
     "source": "https://greengoldoils.com/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 7
   },
   {
     "company": "Emirates Industrial Filters Co.",
@@ -150,7 +164,9 @@
     "offer": "B2B filtration catalogue + RFQ",
     "value_note": "WhatsApp published on homepage.",
     "source": "https://www.eif.ae/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 4
   },
   {
     "company": "AG Metal Industry LLC",
@@ -167,7 +183,9 @@
     "offer": "Fabrication brand site replacing GoDaddy builder",
     "value_note": "sales@agmetal.ae and wa.me/971521294509 published.",
     "source": "https://agmetal.ae/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 1
   },
   {
     "company": "SJS Enersol Engineering Works LLC",
@@ -184,7 +202,9 @@
     "offer": "One brand site + catalogue for fasteners and fabrication",
     "value_note": "Fabrication WhatsApp +971 58 8918432 also listed.",
     "source": "https://sjsenersol.com/contact/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 12
   },
   {
     "company": "Umm Al Quwain Rubber Industries Limited (URIL)",
@@ -218,7 +238,9 @@
     "offer": "Garage website + WhatsApp booking",
     "value_note": "No public email; WhatsApp/mobile published.",
     "source": "https://alramlahgarage.com/contact/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 2
   },
   {
     "company": "Al Najam Transport",
@@ -235,7 +257,9 @@
     "offer": "Transport company website + school-contract enquiry",
     "value_note": "Second mobile +971 54 787 5553 and alsaifeellc@gmail.com also listed.",
     "source": "https://alnajamtransport.com/school-transport-service-ras-al-khaimah-ajman/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 9
   },
   {
     "company": "NaasBay (HERBZE)",
@@ -252,7 +276,9 @@
     "offer": "Launch website + distributor landing page",
     "value_note": "Second WhatsApp +971 54 494 1393 listed on LinkedIn posts.",
     "source": "https://www.linkedin.com/company/naasbay",
-    "lead_type": "new_business"
+    "lead_type": "new_business",
+    "contact_week": 1,
+    "contact_rank": 10
   },
   {
     "company": "U-PAK FZC",
@@ -286,7 +312,9 @@
     "offer": "School admissions website + enquiry CRM",
     "value_note": "Mobile published for WhatsApp.",
     "source": "https://dpsajman.com/contact/",
-    "lead_type": "outdated_site"
+    "lead_type": "outdated_site",
+    "contact_week": 1,
+    "contact_rank": 15
   },
   {
     "company": "Tenhal Information Technology Company",
@@ -643,7 +671,9 @@
     "offer": "UAE branch website + enquiry CRM",
     "value_note": "Contact published on group contact page.",
     "source": "https://green-gold.co/en/contact-us/",
-    "lead_type": "new_business"
+    "lead_type": "new_business",
+    "contact_week": 1,
+    "contact_rank": 11
   },
   {
     "company": "Advanced Medical Center (AMC Muscat)",

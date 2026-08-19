@@ -283,26 +283,85 @@ def email_body(r: dict) -> str:
     return body
 
 
+def site_hook(wrong: str, max_len: int = 120) -> str:
+    w = (wrong or "").strip()
+    if not w:
+        return "your current site does not feel conversion-ready on mobile"
+    if len(w) <= max_len:
+        return w[0].lower() + w[1:] if w else w
+    cut = w[: max_len - 1].rsplit(" ", 1)[0]
+    return cut[0].lower() + cut[1:] + "…"
+
+
 def whatsapp_msg(r: dict) -> str:
     company = r["company"]
     g = greeting(r.get("owner_or_dm") or "")
     offer = r["offer"]
-    area = r.get("locality") or "the GCC"
+    area = (r.get("locality") or "UAE").split(",")[0]
+    industry = r.get("industry") or "Business"
     lead_type = (r.get("lead_type") or "").lower()
+    hook = site_hook(r.get("wrong") or "")
+
     if lead_type == "new_business":
-        notice = (
-            f"I was reviewing new businesses in {area} and noticed {company} still needs "
-            "a conversion-ready website for the Gulf market."
+        opener = (
+            f"I saw {company} launching in {area} — strong brand, but most enquiries still "
+            f"land on WhatsApp/Instagram instead of a owned website."
+        )
+        pain = (
+            "A simple 5-page site (About, Services, Gallery, Contact + WhatsApp button) "
+            "helps you look established when buyers Google you."
+        )
+    elif industry == "Healthcare":
+        opener = (
+            f"I was comparing clinics in {area} and noticed {company}'s website — {hook}."
+        )
+        pain = (
+            "Most patients shortlist 2–3 clinics on mobile before they call. "
+            "A clean site with WhatsApp booking usually wins that first enquiry."
+        )
+    elif industry in {"Manufacturing", "Trading"}:
+        opener = (
+            f"I came across {company} while reviewing industrial suppliers in {area} — {hook}."
+        )
+        pain = (
+            "RFQ buyers in the UAE usually pick suppliers with a clear product catalogue "
+            "and a WhatsApp quote button — not a thin brochure page."
+        )
+    elif industry == "Automotive":
+        opener = (
+            f"I checked {company}'s site — {hook}."
+        )
+        pain = (
+            "Most garage bookings in Dubai/RAK now start on Google or WhatsApp. "
+            "A mobile site with service list + click-to-call helps you capture walk-ins."
+        )
+    elif industry == "Education":
+        opener = (
+            f"Parents comparing schools in {area} check the website on mobile before admissions calls — "
+            f"{company}'s online presence could convert more enquiries."
+        )
+        pain = "Happy to show how a cleaner admissions page + WhatsApp enquiry could look."
+    elif industry == "Services":
+        opener = (
+            f"I reviewed {company} in {area} — {hook}."
+        )
+        pain = (
+            "Local service buyers trust a proper website over Gmail/listing pages "
+            "when they compare vendors."
         )
     else:
-        notice = (
+        opener = (
             f"I was reviewing businesses in {area} and noticed {company}'s "
-            "website looks outdated for today's market."
+            "website looks outdated for today's Gulf market."
         )
+        pain = "Buyers judge readiness from your website before they ever call."
+
     return (
         f"{g}\n\n"
-        f"I'm Vaibhav from DMC Creatives Studio. {notice}\n\n"
-        f"We can help with {offer.lower()}. If useful, I can share a quick redesign concept — no obligation.\n\n"
+        f"I'm Vaibhav from DMC Creatives Studio (India). {opener}\n\n"
+        f"{pain}\n\n"
+        f"We help with {offer.lower()}. Packages from ~AED 2,500 for SMEs.\n"
+        "I can share a free one-page mockup this week — no obligation.\n\n"
         "Vaibhav Gurav\n"
         "DMC Creatives Studio\n"
         "hello@dmcstudio.in\n"
@@ -346,6 +405,8 @@ def normalize_row(raw: dict) -> dict | None:
         "source": (raw.get("source") or "").strip(),
         "lead_type": (raw.get("lead_type") or "outdated_site").strip(),
         "country": (raw.get("country") or "").strip(),
+        "contact_week": int(raw.get("contact_week") or 0),
+        "contact_rank": int(raw.get("contact_rank") or 0),
     }
 
 
@@ -368,7 +429,11 @@ def load_all() -> list[dict]:
             continue
         seen.add(key)
         rows.append(n)
-    rows.sort(key=lambda r: (0 if r["priority"] == "High" else 1, r["company"].lower()))
+    rows.sort(key=lambda r: (
+        0 if r["priority"] == "High" else 1,
+        r["contact_rank"] if r.get("contact_rank") else 999,
+        r["company"].lower(),
+    ))
     return rows
 
 
@@ -542,6 +607,8 @@ def write_html(rows: list[dict]) -> Path:
             "locality": r["locality"],
             "country": r.get("country") or "",
             "leadType": r.get("lead_type") or "",
+            "contactWeek": r.get("contact_week") or 0,
+            "contactRank": r.get("contact_rank") or 0,
             "wrong": r["wrong"],
             "offer": r["offer"],
             "valueNote": r["value_note"],
@@ -940,6 +1007,10 @@ textarea {{ min-height: 220px; line-height: 1.45; font-family: var(--font); }}
     <option value="High">High</option>
     <option value="Medium">Medium</option>
   </select>
+  <select id="week">
+    <option value="All">All leads</option>
+    <option value="1" selected>UAE Week 1 (top 15)</option>
+  </select>
   <select id="country"><option value="All">All countries</option></select>
   <select id="leadType">
     <option value="All">All lead types</option>
@@ -972,6 +1043,7 @@ const listEl = document.getElementById('list');
 const detailEl = document.getElementById('detail');
 const qEl = document.getElementById('q');
 const pEl = document.getElementById('priority');
+const weekEl = document.getElementById('week');
 const countryEl = document.getElementById('country');
 const typeEl = document.getElementById('leadType');
 const iEl = document.getElementById('industry');
@@ -999,6 +1071,7 @@ function filtered() {{
   return CONTACTS.filter(c => {{
     if (pEl.value !== 'All' && c.priority !== pEl.value) return false;
     if (iEl.value !== 'All' && c.industry !== iEl.value) return false;
+    if (weekEl.value !== 'All' && String(c.contactWeek) !== weekEl.value) return false;
     if (countryEl.value !== 'All' && c.country !== countryEl.value && !(c.locality || '').includes(countryEl.value)) return false;
     if (typeEl.value !== 'All' && c.leadType !== typeEl.value) return false;
     if (cEl.value === 'email' && !c.email) return false;
@@ -1029,7 +1102,7 @@ function renderList() {{
   updateStats(rows);
   listEl.innerHTML = rows.map((c, idx) => `
     <div class="item ${{selected && selected.company === c.company ? 'active' : ''}}" data-company="${{c.company.replace(/"/g,'&quot;')}}" style="animation-delay:${{Math.min(idx, 12) * 30}}ms">
-      <div class="co"><span class="prio ${{c.priority}}">${{c.priority}}</span>${{esc(c.company)}}</div>
+      <div class="co">${{c.contactRank ? `<span class="prio High">#${{c.contactRank}}</span>` : ''}}<span class="prio ${{c.priority}}">${{c.priority}}</span>${{esc(c.company)}}</div>
       <div class="meta">${{esc(c.industry)}} · ${{esc(c.leadType === 'new_business' ? 'New business' : 'Outdated site')}} · ${{esc(c.dm) || 'No named contact'}} · ${{esc(c.locality)}}</div>
     </div>
   `).join('');
@@ -1138,6 +1211,7 @@ function renderDetail() {{
 
 qEl.addEventListener('input', renderList);
 pEl.addEventListener('change', renderList);
+weekEl.addEventListener('change', renderList);
 countryEl.addEventListener('change', renderList);
 typeEl.addEventListener('change', renderList);
 iEl.addEventListener('change', renderList);
@@ -1148,8 +1222,11 @@ window.addEventListener('resize', () => {{
 }});
 renderList();
 if (!isMobile()) {{
-  const firstHigh = CONTACTS.find(c => c.priority === 'High') || CONTACTS[0];
-  if (firstHigh) {{ selected = firstHigh; renderList(); renderDetail(); }}
+  const firstWeek = CONTACTS.find(c => c.contactWeek === 1 && c.contactRank === 1)
+    || CONTACTS.find(c => c.contactWeek === 1)
+    || CONTACTS.find(c => c.priority === 'High')
+    || CONTACTS[0];
+  if (firstWeek) {{ selected = firstWeek; renderList(); renderDetail(); }}
 }} else {{
   renderDetail();
 }}
